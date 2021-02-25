@@ -27,54 +27,6 @@ $activePage = basename($_SERVER['PHP_SELF'], ".php");
                     <a href="logout.php" class="pull-right" data-toggle="tooltip" data-placement="bottom" title="Logout"><i class="gi gi-exit"></i></a>
                 </div>
             </div>
-            <!-- Theme Colors -->
-            <!-- Change Color Theme functionality can be found in js/app.js - templateOptions() -->
-<!--            <ul class="sidebar-section sidebar-themes clearfix sidebar-nav-mini-hide">-->
-<!--                <li>-->
-<!--                    <a href="javascript:void(0)" class="themed-background-dark-night themed-border-night" data-theme="css/themes/night.css" data-toggle="tooltip" title="Night"></a>-->
-<!--                </li>-->
-<!--                <li>-->
-<!--                    <a href="javascript:void(0)" class="themed-background-dark-amethyst themed-border-amethyst" data-theme="css/themes/amethyst.css" data-toggle="tooltip" title="Amethyst"></a>-->
-<!--                </li>-->
-<!--                <li>-->
-<!--                    <a href="javascript:void(0)" class="themed-background-dark-modern themed-border-modern" data-theme="css/themes/modern.css" data-toggle="tooltip" title="Modern"></a>-->
-<!--                </li>-->
-<!--                <li>-->
-<!--                    <a href="javascript:void(0)" class="themed-background-dark-autumn themed-border-autumn" data-theme="css/themes/autumn.css" data-toggle="tooltip" title="Autumn"></a>-->
-<!--                </li>-->
-<!--                <li>-->
-<!--                    <a href="javascript:void(0)" class="themed-background-dark-flatie themed-border-flatie" data-theme="css/themes/flatie.css" data-toggle="tooltip" title="Flatie"></a>-->
-<!--                </li>-->
-<!--                <li>-->
-<!--                    <a href="javascript:void(0)" class="themed-background-dark-spring themed-border-spring" data-theme="css/themes/spring.css" data-toggle="tooltip" title="Spring"></a>-->
-<!--                </li>-->
-<!--                <li>-->
-<!--                    <a href="javascript:void(0)" class="themed-background-dark-fancy themed-border-fancy" data-theme="css/themes/fancy.css" data-toggle="tooltip" title="Fancy"></a>-->
-<!--                </li>-->
-<!--                <li>-->
-<!--                    <a href="javascript:void(0)" class="themed-background-dark-fire themed-border-fire" data-theme="css/themes/fire.css" data-toggle="tooltip" title="Fire"></a>-->
-<!--                </li>-->
-<!--                <li>-->
-<!--                    <a href="javascript:void(0)" class="themed-background-dark-coral themed-border-coral" data-theme="css/themes/coral.css" data-toggle="tooltip" title="Coral"></a>-->
-<!--                </li>-->
-<!--                <li>-->
-<!--                    <a href="javascript:void(0)" class="themed-background-dark-lake themed-border-lake" data-theme="css/themes/lake.css" data-toggle="tooltip" title="Lake"></a>-->
-<!--                </li>-->
-<!--                <li>-->
-<!--                    <a href="javascript:void(0)" class="themed-background-dark-forest themed-border-forest" data-theme="css/themes/forest.css" data-toggle="tooltip" title="Forest"></a>-->
-<!--                </li>-->
-<!--                <li>-->
-<!--                    <a href="javascript:void(0)" class="themed-background-dark-waterlily themed-border-waterlily" data-theme="css/themes/waterlily.css" data-toggle="tooltip" title="Waterlily"></a>-->
-<!--                </li>-->
-<!--                <li>-->
-<!--                    <a href="javascript:void(0)" class="themed-background-dark-emerald themed-border-emerald" data-theme="css/themes/emerald.css" data-toggle="tooltip" title="Emerald"></a>-->
-<!--                </li>-->
-<!--                <li>-->
-<!--                    <a href="javascript:void(0)" class="themed-background-dark-blackberry themed-border-blackberry" data-theme="css/themes/blackberry.css" data-toggle="tooltip" title="Blackberry"></a>-->
-<!--                </li>-->
-<!--            </ul>-->
-            <!-- END Theme Colors -->
-
             <!-- Sidebar Navigation -->
             <ul class="sidebar-nav">
                 <li>
@@ -116,9 +68,6 @@ $activePage = basename($_SERVER['PHP_SELF'], ".php");
                         <li>
                             <a class="<?= ($activePage == 'reject') ? 'active':''; ?>" href="reject.php">Rejected refund</a>
                         </li>
-<!--                        <li>-->
-<!--                            <a class="--><?//= ($activePage == 'pending') ? 'active':''; ?><!--" href="pending.php">Pending refund</a>-->
-<!--                        </li>-->
                         <li>
                             <a class="<?= ($activePage == 'paid') ? 'active':''; ?>" href="paid.php">Paid refund</a>
                         </li>
@@ -152,24 +101,11 @@ $activePage = basename($_SERVER['PHP_SELF'], ".php");
                         <li>
                             <a class="<?= ($activePage == 'hotel_reject') ? 'active':''; ?>" href="hotel_reject.php">Rejected refund</a>
                         </li>
-<!--                        <li>-->
-<!--                            <a class="--><?//= ($activePage == 'hotel_pending') ? 'active':''; ?><!--" href="hotel_pending.php">Pending refund</a>-->
-<!--                        </li>-->
                         <li>
                             <a class="<?= ($activePage == 'hotel_paid') ? 'active':''; ?>" href="hotel_paid.php">Paid refund</a>
                         </li>
                     </ul>
                 </li>
-<!--                <li class="sidebar-header">-->
-<!--                    <span class="sidebar-header-options clearfix"><a href="javascript:void(0)" data-toggle="tooltip" title="Hotel"><i class="fa fa-building"></i></a></span>-->
-<!--                    <span class="sidebar-header-title">Hotel Holiday Package</span>-->
-<!--                </li>-->
-<!--                <li>-->
-<!--                    <a href="addpackage.php" class="--><?//= ($activePage == 'addpackage') ? 'active':''; ?><!--"><i class="fa fa-building sidebar-nav-icon"></i><span class="sidebar-nav-mini-hide">Add Top Offers</span></a>-->
-<!--                </li>-->
-<!--                <li>-->
-<!--                    <a href="managepackage.php" class="--><?//= ($activePage == 'managepackage') ? 'active':''; ?><!--"><i class="fa fa-building sidebar-nav-icon"></i><span class="sidebar-nav-mini-hide">Manage Top Offers</span></a>-->
-<!--                </li>-->
                 <li class="sidebar-header">
                     <span class="sidebar-header-options clearfix"><a href="javascript:void(0)" data-toggle="tooltip" title="Visa"><i class="fa fa-cc-visa"></i></a></span>
                     <span class="sidebar-header-title">Visa</span>
@@ -219,9 +155,6 @@ $activePage = basename($_SERVER['PHP_SELF'], ".php");
             <div class="modal-header text-center">
                 <h2 class="modal-title"><i class="fa fa-cogs"></i> Settings</h2>
             </div>
-            <!-- END Modal Header -->
-
-            <!-- Modal Body -->
             <div class="modal-body">
                 <form action="" method="POST" enctype="multipart/form-data" class="form-horizontal form-bordered">
                     <fieldset>

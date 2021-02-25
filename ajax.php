@@ -60,8 +60,6 @@ if($_POST['action']=='marginupdate')
     if($sql) {
         $row = mysqli_fetch_array(mysqli_query($con, "select margin from margin"));
         $date = date('j F, Y');
-
-
         if ($row)
         {
             require "PHPMailer/PHPMailerAutoload.php";
@@ -75,11 +73,8 @@ if($_POST['action']=='marginupdate')
             $mail->Port = 465;
             $mail->Username = 'info@darwintrip.com';
             $mail->Password = 'Darwin@2020';
-
-
 //   $path = 'reseller.pdf';
 //   $mail->AddAttachment($path); NameSizeLast ModifiedTypePermissions
-
             $mail->IsHTML(true);
             $mail->From = "info@darwintrip.com";
             $mail->FromName = 'DarwinTrip';
