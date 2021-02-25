@@ -1,0 +1,6 @@
+[25-Feb-2021 11:29:58 UTC] PHP Parse error:  syntax error, unexpected 'if' (T_IF) in /home/darwintrip/public_html/admin/devadmin/ajax.php on line 20
+[25-Feb-2021 11:30:47 UTC] PHP Parse error:  syntax error, unexpected 'if' (T_IF) in /home/darwintrip/public_html/admin/devadmin/ajax.php on line 20
+[25-Feb-2021 11:31:40 UTC] PHP Parse error:  syntax error, unexpected 'if' (T_IF) in /home/darwintrip/public_html/admin/devadmin/ajax.php on line 20
+[25-Feb-2021 11:33:12 UTC] PHP Warning:  mysqli_query() expects parameter 1 to be mysqli, object given in /home/darwintrip/public_html/admin/devadmin/ajax.php on line 139
+[25-Feb-2021 11:33:12 UTC] PHP Warning:  mysqli_fetch_array() expects parameter 1 to be mysqli_result, null given in /home/darwintrip/public_html/admin/devadmin/ajax.php on line 140
+[25-Feb-2021 11:33:12 UTC] PHP Deprecated:  __autoload() is deprecated, use spl_autoload_register() instead in /home/darwintrip/public_html/admin/devadmin/PHPMailer/PHPMailerAutoload.php on line 45
