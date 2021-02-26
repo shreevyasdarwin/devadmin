@@ -5,7 +5,7 @@ include('global/config.php');
 if($_SESSION['admin'] == ""){
     header('location:index.php');
 }
-
+// new changes
 //user details
 $users = mysqli_query($con,'SELECT * FROM user_register ORDER BY created_date DESC LIMIT 5');
 include('global/function.php');
