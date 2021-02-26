@@ -115,7 +115,6 @@
         </script>
         <!-- Load and execute javascript code used only in this page -->
         <script src="js/pages/login.js"></script>
-        <!-- <script>$(function(){ Login.init(); });</script> -->
         <script>
             $("#login").click(function() {
                 const username = $("#username").val()

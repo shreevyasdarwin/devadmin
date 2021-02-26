@@ -156,34 +156,58 @@ $activePage = basename($_SERVER['PHP_SELF'], ".php");
                 <h2 class="modal-title"><i class="fa fa-cogs"></i> Settings</h2>
             </div>
             <div class="modal-body">
-                <form action="" method="POST" enctype="multipart/form-data" class="form-horizontal form-bordered">
+                <div class="form-horizontal form-bordered">
                     <fieldset>
-                        <legend class="text-center">Password Update</legend>
+                        <legend class="text-center"><div id="response">Password Update</div></legend>
                         <div class="form-group">
                             <label class="col-md-4 control-label" for="user-settings-password">New Password</label>
+                            <div id="npass_err"></div>
                             <div class="col-md-8">
-                                <input type="password" id="user-settings-password" name="npass" class="form-control" placeholder="Enter new password">
+                                <input type="password" id="npass" name="npass" class="form-control" placeholder="Enter new password">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-md-4 control-label" for="user-settings-repassword">Confirm New Password</label>
+                            <div id="cpass_err"></div>
                             <div class="col-md-8">
-                                <input type="password" id="user-settings-repassword" name="cpass" class="form-control" placeholder="..and confirm it!">
+                                <input type="password" id="cpass" name="cpass" class="form-control" placeholder="..and confirm it!">
                             </div>
                         </div>
                     </fieldset>
-                    <?php if(isset($msg)){
-                        echo $msg;
-                    } ?>
                     <div class="form-group form-actions">
                         <div class="col-xs-12 text-right">
                             <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Close</button>
-                            <button type="submit" name="update" class="btn btn-sm btn-primary">Save Changes</button>
+                            <button type="button" name="changepassword" id="changepassword" class="btn btn-sm btn-primary">Save Changes</button>
                         </div>
                     </div>
-                </form>
+                </div>
             </div>
             <!-- END Modal Body -->
         </div>
     </div>
 </div>
+<script>
+    document.getElementById("changepassword").addEventListener("click", function(){
+        var npass = document.getElementById("npass").value
+        var cpass = document.getElementById("cpass").value
+        if(!npass){
+            document.getElementById("npass_err").innerHTML="<p class='text-danger'>Please fillout this field</p>"
+            return
+        } 
+        if(!cpass){
+            document.getElementById("cpass_err").innerHTML="<p class='text-danger'>Please fillout this field</p>"
+            return
+        } 
+        $.ajax({
+            url: 'ajax.php',
+            method: 'POST',
+            data: { action: 'changepassword', npass: npass, cpass: cpass },
+            success: function(response){
+                console.log(response);
+                if(response=='3'){ 
+                    document.getElementById("response").innerHTML="<div class='alert alert-success' role='alert'>Password updated successfully!</div>"
+                }
+            }
+        })
+    })
+</script>

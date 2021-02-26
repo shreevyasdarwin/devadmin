@@ -2,7 +2,6 @@
 include('global/config.php');
 include('global/function.php');
 session_start();
-
 //login
 if($_POST['action']=='login') {
     $username = $_POST['username'];
@@ -15,6 +14,8 @@ if($_POST['action']=='login') {
         echo "2";
         exit;
     }
+    // echo "select * from admin where username='$username' and password='$password'";
+    // exit;
     $stmt = $pdo->prepare("select * from admin where username=? and password=?");
     $stmt->execute([$username, $password]);
     if($stmt->rowCount() > 0){
@@ -27,7 +28,25 @@ if($_POST['action']=='login') {
             exit;
         }
 }
-
+// update admin password
+if($_POST['action']=='changepassword'){
+    $npass = $_POSt['npass'];
+    $cpass = $_POSt['cpass'];
+    if(!$npass){
+        echo "1";
+        exit;
+    }
+    if(!$cpass){
+        echo "2";
+        exit;
+    }
+    $stmt = $pdo->prepare("update admin set password='$cpass'");
+    if($stmt->execute([$cpass])){
+        echo "3";
+    }else{
+        var_dump($pdo->errorInfo());
+    }
+}
 //to deactivate user
 if ($_POST['action']=='deactivate'){
     $id=$_POST['id'];
@@ -39,7 +58,6 @@ if ($_POST['action']=='deactivate'){
         echo"error";
     }
 }
-
 //to activate user
 if ($_POST['action']=='activate') {
     $id=$_POST['id'];
@@ -51,7 +69,6 @@ if ($_POST['action']=='activate') {
         echo"error";
     }
 }
-
 //update margin
 if($_POST['action']=='marginupdate')
 {
@@ -82,7 +99,6 @@ if($_POST['action']=='marginupdate')
             $mail->AddReplyTo('info@darwintrip.com', 'DarwinTrip');
             $mail->Subject = 'Margin set by Admin';
             $mail->Body = '<table align="center" border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse; width: 100%; max-width: 600px;" class="content">
-
         <tr>
             <td align="center" bgcolor="#f0f0f0" style=" color: #ffffff; font-family: Arial, sans-serif; font-size: 36px; font-weight: bold;">
                 <img src="https://darwintrip.com/admin/img/logo.png" alt="darwintrip logo" width="auto" height="152" style="display:block;" />
@@ -98,8 +114,6 @@ if($_POST['action']=='marginupdate')
                 <br>
             </td>
         </tr>
-    
-    
         <tr>
             <td style="padding: 15px 10px 15px 10px;">
                 <table border="0" cellpadding="0" cellspacing="0" width="100%">
@@ -128,7 +142,6 @@ if($_POST['action']=='marginupdate')
         echo "error";
     }
 }
-
 //Forgot password code
 if($_POST['action']=='forgotpass')
 {
@@ -190,10 +203,7 @@ if($_POST['action']=='forgotpass')
         echo "success";
     }
 }
-
-
 //fetch dashboard details
-
 if($_POST['action']=='dashboard')
 {
     //total flight booking
@@ -303,13 +313,11 @@ if($_POST['action']=='dashboard')
     ));
 
     $response = curl_exec($curl);
-
     curl_close($curl);
     $datas= json_decode($response);
     $rows['balance']= $datas->balance;
     echo json_encode($rows);
 }
-
 //add holiday package
 if($_POST['action']=='addpackage')
 {
@@ -416,11 +424,8 @@ if($_POST['action'] == 'approvevisa'){
         $mail->Port = 465;
         $mail->Username = 'info@darwintrip.com';
         $mail->Password = 'Darwin@2020';
-
-
 //   $path = 'reseller.pdf';
 //   $mail->AddAttachment($path); NameSizeLast ModifiedTypePermissions
-
         $mail->IsHTML(true);
         $mail->From = "info@darwintrip.com";
         $mail->FromName = 'DarwinTrip';
@@ -453,8 +458,6 @@ if($_POST['action'] == 'rejectvisa'){
         $mail->Port = 465;
         $mail->Username = 'info@darwintrip.com';
         $mail->Password = 'Darwin@2020';
-
-
 //   $path = 'reseller.pdf';
 //   $mail->AddAttachment($path); NameSizeLast ModifiedTypePermissions
 
@@ -472,9 +475,6 @@ if($_POST['action'] == 'rejectvisa'){
         echo mysqli_error($con);
     }
 }
-
-
-
 //hotel paid
 if($_POST['action'] == 'hotelpaid'){
     $id=$_POST['paid'];
