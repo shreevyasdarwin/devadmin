@@ -9,16 +9,6 @@ if($_SESSION['admin'] == ""){
 //user details
 $users = mysqli_query($con,'SELECT * FROM user_register ORDER BY created_date DESC LIMIT 5');
 include('global/function.php');
-//update password
-if(isset($_POST['update'])) {
-    $cpass = $_POST['cpass'];
-    $npass = $_POST['mpass'];
-    $sql = mysqli_query($con, "update admin set password='$cpass'");
-        if ($sql)
-            $notify = true;
-        else
-            echo mysqli_error($con);
-}
 ?>
 <!DOCTYPE html>
 <!--[if IE 9]>         <html class="no-js lt-ie10" lang="en"> <![endif]-->
@@ -713,9 +703,9 @@ if(isset($_POST['update'])) {
                     url: "ajax.php",
                     method: "POST",
                     data: {action: 'dashboard'},
-                    success: function (data) {
-                        var json =  $.parseJSON(data);
-                        
+                    success: function (response) {
+                        // console.log(response);
+                        var json =  JSON.parse(response);
                         //today's flight booking
                         $('#todayflight').text(json.todayflight);
                         //total flight booking

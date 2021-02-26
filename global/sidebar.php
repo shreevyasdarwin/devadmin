@@ -206,6 +206,9 @@ $activePage = basename($_SERVER['PHP_SELF'], ".php");
                 console.log(response);
                 if(response=='3'){ 
                     document.getElementById("response").innerHTML="<div class='alert alert-success' role='alert'>Password updated successfully!</div>"
+                    setTimeout(() => {
+                        window.location.reload()
+                    }, 1000);
                 }
             }
         })

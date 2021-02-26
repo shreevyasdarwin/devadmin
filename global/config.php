@@ -1,9 +1,7 @@
 <?php
-//$con=mysqli_connect('localhost:3306','darwintr_darwintrip','9,j(u*[[(G@q','darwintr_dev');
-$con=mysqli_connect('localhost:3306','darwintr_darwintrip','9,j(u*[[(G@q','darwintr_trip3');
-
+$con=mysqli_connect('162.241.87.23:3306','darwintr_darwintrip','9,j(u*[[(G@q','darwintr_dev');
 try {
-    $pdo = new PDO("mysql:host=localhost;dbname=darwintr_trip3", "darwintr_darwintrip", "9,j(u*[[(G@q");
+    $pdo = new PDO("mysql:host=162.241.87.23:3306;dbname=darwintr_dev", "darwintr_darwintrip", "9,j(u*[[(G@q");
 } catch (Exception $e) {
     var_dump($e);
 }

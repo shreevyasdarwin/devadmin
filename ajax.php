@@ -30,8 +30,8 @@ if($_POST['action']=='login') {
 }
 // update admin password
 if($_POST['action']=='changepassword'){
-    $npass = $_POSt['npass'];
-    $cpass = $_POSt['cpass'];
+    $npass = $_POST['npass'];
+    $cpass = $_POST['cpass'];
     if(!$npass){
         echo "1";
         exit;
@@ -249,7 +249,7 @@ if($_POST['action']=='dashboard')
     //failed refund
     $failedrefund = mysqli_fetch_array(mysqli_query($con,"SELECT SUM(ceiling(round(amount))) as failedrefund FROM payment_refund WHERE service='flight' AND status='0'"));
     //charter enq
-    $charter = mysqli_fetch_array(mysqli_query($con,"select COUNT(id) as chater FROM charter_enq"));
+    $charter = mysqli_fetch_array(mysqli_query($con,"select COUNT(IFNULL(id,0)) as charter FROM charter_enq"));
     //total contact 
 
     //total flight booking
