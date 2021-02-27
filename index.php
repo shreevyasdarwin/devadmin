@@ -83,7 +83,7 @@ error_reporting(0);
                         </div>
                     </div>
                     <div id="msg">
-                        <?=  flash() ?>
+                        <?= flash() ?>
                     </div>
                     <div class="form-group form-actions">
                         <div class="col-xs-7 text-right">
@@ -153,7 +153,6 @@ error_reporting(0);
                     }
                 })
             })
-            
         </script>
     </body>
 </html>

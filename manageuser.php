@@ -15,6 +15,9 @@ $user = mysqli_query($con,"select u.id,u.mobile,u.email,u.created_date,u.status,
 
     <!-- Modernizr (browser feature detection library) -->
     <script src="js/vendor/modernizr.min.js"></script>
+    <style>
+        #modal-user-settings{height:0px !important;}
+    </style>
 </head>
 <body>
 <!-- Page Wrapper -->
@@ -174,6 +177,7 @@ $user = mysqli_query($con,"select u.id,u.mobile,u.email,u.created_date,u.status,
                                 <th class="text-center">Email</th>
                                 <th class="text-center">Registered Date</th>
                                 <th class="text-center">Wallet amount</th>
+                                <th class="text-center">Modal</th>
                                 <th class="text-center">Transaction history</th>
                                 <th class="text-center">Actions</th>
                             </tr>
@@ -192,9 +196,12 @@ $user = mysqli_query($con,"select u.id,u.mobile,u.email,u.created_date,u.status,
                                     <td class="text-center"><?php echo $row['email']; ?></td>
                                     <td class="text-center"><?php echo $new_date; ?></td>
                                     <td class="text-center">&#8377;<?php echo $row['wallet']; ?></td>
+                                    <td class="text-center" style="width: 10%">
+                                        <button type="button" class="btn btn-default" data-toggle="modal" onclick="showmodal('<?= $row['id']?>');" data-target="#modal-default">
+                                        <i class="fa fa-edit"></i>
+                                    </td>
                                     <td class="text-center"><a class="btn btn-link" href="view_transaction_history.php?id=<?php echo $row['id']; ?>" target="_blank">View details</a></td>
                                     <td class="text-center">
-
                                         <div class="col-md-8">
                                             <label class="switch switch-primary">
                                                 <?php
@@ -230,7 +237,38 @@ $user = mysqli_query($con,"select u.id,u.mobile,u.email,u.created_date,u.status,
     <!-- END Page Container -->
 </div>
 <!-- END Page Wrapper -->
-
+<!-- /.modal -->
+<div class="modal fade" id="modal-default">
+    <div class="modal-dialog">
+    <form>
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Add wallet amount</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                <label>Enter amount <span id="amt_err"></span></label>
+                <input type="text" class="form-control" name="walletAmount" id="walletAmount" placeholder="Enter amount">
+                </div>
+            </div>
+        </div>
+      </div>
+      <div class="modal-footer justify-content-between">
+        <button type="button" class="btn btn-default float-right" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" id="addWalletAmount">Update</button>
+      </div>
+    </div>
+  </form>
+    <!-- /.modal-content -->
+    </div>
+<!-- /.modal-dialog -->
+</div>
+  <!-- Modal end-->
 <!-- Scroll to top link, initialized in js/app.js - scrollToTop() -->
 <a href="#" id="to-top"><i class="fa fa-angle-double-up"></i></a>
 
@@ -248,6 +286,40 @@ $user = mysqli_query($con,"select u.id,u.mobile,u.email,u.created_date,u.status,
 
 <!--activate / deactivate user with ajax-->
 <script>
+    function showmodal(id){
+            $('#addWalletAmount').val(id);
+            $('.modal').show();   
+        }
+        //insert into wallet 
+    $('#addWalletAmount').click(()=>{
+        var amount = $('#walletAmount').val();
+        var id = $('#addWalletAmount').val();
+        console.log(amount);
+        console.log(id);
+        if(!amount){
+            $('#amt_err').text('Enter a valid amount').css('color','red');
+            $('#walletAmount').focus();
+            return false;
+        }
+        $.ajax({
+          type: 'POST',
+          url : 'ajax.php',
+          data: { addWalletAmount: '1', id: id, amount: amount },
+          success: function(response) {
+              console.log(response);
+            //   return
+            if(response=='1'){
+                swal('success', 'Amount credited', 'success');
+                location.reload();                
+            }
+          },
+          error: function (jqXHR, exception) {
+              console.log(jqXHR);
+              console.log(exception);
+          },
+        });
+    });    
+
     $(document).ready(function() {
         $('input[type="checkbox"]').change(function() {
             var id = $(this).val();
