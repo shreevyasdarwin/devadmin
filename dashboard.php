@@ -2,13 +2,11 @@
 //admin session
 session_start();
 include('global/config.php');
+include('global/function.php');
 if($_SESSION['admin'] == ""){
     header('location:index.php');
 }
-// new changes(demo)
-//user details
 $users = mysqli_query($con,'SELECT * FROM user_register ORDER BY created_date DESC LIMIT 5');
-include('global/function.php');
 ?>
 <!DOCTYPE html>
 <!--[if IE 9]>         <html class="no-js lt-ie10" lang="en"> <![endif]-->
@@ -643,16 +641,7 @@ include('global/function.php');
             </div>
             <!-- END Page Container -->
         </div>
-        <!-- END Page Wrapper -->
-
-        <!-- Scroll to top link, initialized in js/app.js - scrollToTop() -->
         <a href="#" id="to-top"><i class="fa fa-angle-double-up"></i></a>
-
-        <!-- User Settings, modal which opens from Settings link (found in top right user menu) and the Cog link (found in sidebar user info) -->
-
-        <!-- END User Settings -->
-
-        <!-- jQuery, Bootstrap.js, jQuery plugins and Custom JS code -->
         <?php include("global/script.php");?>
 
         <!--sweetalert-->
@@ -663,10 +652,7 @@ include('global/function.php');
                     url: "ajax.php",
                     method: "POST",
                     data: {action: 'businesswallet'},
-
-                success: function (data) {
-                        // var json =  $.parseJSON(data);
-                    // document.getElementById('businesswallet').value=data;
+                    success: function (data) {
                     $("#businesswallet").html(data);
                 }
             });
@@ -674,7 +660,7 @@ include('global/function.php');
         </script>
         <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
-<!--        set margin -->
+<!--set margin -->
         <script type="text/javascript">
                 $("#updatemargin").click(function() {
                     var amount = $("#marginamt").val();
@@ -683,7 +669,8 @@ include('global/function.php');
                         url: "ajax.php",
                         method: "POST",
                         data: {action: 'marginupdate', amt: amount},
-                        success: function (data) {
+                        success: function (response) {
+                            console.log(response);
                             swal("Margin has been updated", {
                                 icon: "success",
                             });

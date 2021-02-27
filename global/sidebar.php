@@ -160,15 +160,15 @@ $activePage = basename($_SERVER['PHP_SELF'], ".php");
                     <fieldset>
                         <legend class="text-center"><div id="response">Password Update</div></legend>
                         <div class="form-group">
-                            <label class="col-md-4 control-label" for="user-settings-password">New Password</label>
                             <div id="npass_err"></div>
+                            <label class="col-md-4 control-label" for="user-settings-password">New Password</label>
                             <div class="col-md-8">
                                 <input type="password" id="npass" name="npass" class="form-control" placeholder="Enter new password">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-md-4 control-label" for="user-settings-repassword">Confirm New Password</label>
                             <div id="cpass_err"></div>
+                            <label class="col-md-4 control-label" for="user-settings-repassword">Confirm New Password</label>
                             <div class="col-md-8">
                                 <input type="password" id="cpass" name="cpass" class="form-control" placeholder="..and confirm it!">
                             </div>

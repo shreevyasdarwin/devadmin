@@ -142,7 +142,10 @@ error_reporting(0);
                     success: function(response) {
                         console.log(response);
                         if(response=='3') {
-                            window.location.href='dashboard.php'
+                            $("#please_wait").html("<button type='button' class='btn btn-sm btn-primary' disabled>PLease wait...</button>")
+                            setTimeout(() => {
+                                window.location.href='dashboard.php'
+                            }, 1000);
                         }
                         if(response=='4') {
                             location.reload();

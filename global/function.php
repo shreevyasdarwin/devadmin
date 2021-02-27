@@ -1,5 +1,4 @@
 <?php
-
 function margin($con)
 {
     if($row = mysqli_fetch_array(mysqli_query($con,"select * from margin")))
@@ -43,8 +42,4 @@ function money($num) {
         $thecash = $num;
 
     return $thecash; // writes the final format where $currency is the currency symbol.
-}
-
-
-
-?>
+}?>
