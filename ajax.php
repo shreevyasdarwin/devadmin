@@ -388,22 +388,22 @@ if (isset($_POST['deactivatecoupons'])) {
 if(isset($_POST['paid'])){
     $id=$_POST['id'];
     if(mysqli_query($con,"update payment_refund set status='1' where id='$id'")){
-        echo "success";
+        set_flash('success','Amount Paid Successfully');
     }
     else{
+        set_flash('danger','Something went wrong');
         echo mysqli_error($con);
     }
 }
 
-//reject code
 //reject payment
 if(isset($_POST['reject'])){
     $id=$_POST['id'];
     if(mysqli_query($con,"update payment_refund set status='2' where id='$id'")){
-        echo "success";
+        set_flash('success','Amount Rejected Successfully');
     }
     else{
-        echo mysqli_error($con);
+        set_flash('danger','Something went wrong');
     }
 }
 
