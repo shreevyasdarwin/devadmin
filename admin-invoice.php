@@ -1,6 +1,10 @@
 <?php
-$id = $_GET['id'];
+session_start();
 include('global/config.php');
+if(!isset($_SESSION['admin'])){
+    header('location: index.php');
+}
+$id = $_GET['id'];
 $sql=mysqli_query($con,"SELECT * from booking_details where id='$id'");
 while($row=mysqli_fetch_array($sql)){
     $result=$row['response'];
@@ -11,11 +15,9 @@ while($row=mysqli_fetch_array($sql)){
     $amount=$row['amount'];
 }
 $datas = json_decode($result);
-// echo json_encode($datas);exit; 
 $booking_status=$datas->Status;
 
 if($booking_status == 2 or $booking_status==1){
-    // include database connection
     $row1=mysqli_fetch_array(mysqli_query($con,"SELECT r.email,u.gst from user_register r INNER JOIN user_details u on r.id=u.user_id where r.id=$user_id"));
     if($row1){
         $email=$row1['email'];
@@ -23,7 +25,6 @@ if($booking_status == 2 or $booking_status==1){
     }
     if($gst=='')
         $gst='No gst found';
-
     error_reporting(0);
     $airline=$datas->CommitBooking->BookingDetails->JourneyList->FlightDetails->Details[0][0]->OperatorName;
     $departure_date=$datas->CommitBooking->BookingDetails->JourneyList->FlightDetails->Details[0][0]->DateTime;
@@ -222,7 +223,7 @@ if($booking_status == 2 or $booking_status==1){
         }
 
         .table-hover tbody tr:hover {
-            background-color: #f6f7f8;pn
+            background-color: #f6f7f8;
         }
 
         /*-------- Preloader --------*/
@@ -3466,7 +3467,7 @@ if($booking_status == 2 or $booking_status==1){
                 visibility:visible;
             }
             * {
-                color: $fff;
+                color: #fff;
                 background: transparent;
                 -webkit-print-color-adjust: exact !important; /*Chrome, Safari */
                 color-adjust: exact !important;  /*Firefox*/
@@ -3520,10 +3521,6 @@ if($booking_status == 2 or $booking_status==1){
         </div>
         <hr>
         <div class="row">
-<!--            <div style="margin-top:5px;" class="col-sm-2 order-sm-0">-->
-<!--                <h5 class="text-center">Company Email</h5>-->
-<!--                <p><b>info@darwintrip.com</b></p>-->
-<!--            </div>-->
             <div class="col-sm-8">
 
                 <h5 class="">Customer Care</h5>
@@ -3558,7 +3555,6 @@ if($booking_status == 2 or $booking_status==1){
                             <td class="text-center"><strong>Flight</strong></td>
                             <td class="text-center"><strong>Departure</strong></td>
                             <td class="text-center"><strong>Arriving</strong></td>
-                           
                         </tr>
                         </thead>
                         <tbody>

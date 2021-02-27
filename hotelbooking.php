@@ -17,7 +17,7 @@ $book = mysqli_query($con,'SELECT u.user_id,CONCAT(u.fname," ", u.lname) as full
     <script src="js/vendor/modernizr.min.js"></script>
     <style>
         td{
-            height: 40px; !important;
+            height: 40px !important;
         }
     </style>
 </head>

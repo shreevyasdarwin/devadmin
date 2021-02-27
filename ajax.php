@@ -90,8 +90,6 @@ if($_POST['action']=='marginupdate')
             $mail->Port = 465;
             $mail->Username = 'info@darwintrip.com';
             $mail->Password = 'Darwin@2020';
-//   $path = 'reseller.pdf';
-//   $mail->AddAttachment($path); NameSizeLast ModifiedTypePermissions
             $mail->IsHTML(true);
             $mail->From = "info@darwintrip.com";
             $mail->FromName = 'DarwinTrip';

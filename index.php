@@ -7,7 +7,7 @@
         <meta name="author" content="pixelcave">
         <meta name="robots" content="noindex, nofollow">
         <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=0"> 
-        <link rel="shortcut icon" href="img/favicon.png"> -->
+        <link rel="shortcut icon" href="img/favicon.png"> 
         <!-- END Icons -->
 
         <!-- Stylesheets -->
@@ -79,7 +79,7 @@
                     <div class="form-group form-actions">
                     <div id="msg"></div>
                         <div class="col-xs-7 text-right">
-                            <button type="button" name="login" id="login" class="btn btn-sm btn-primary"><i class="fa fa-angle-right"></i>Login</button>
+                            <div id="please_wait"><button type="button" name="login" id="login" class="btn btn-sm btn-primary">Login</button></div>
                         </div>
                     </div>
                     <div class="form-group">
@@ -134,7 +134,10 @@
                     success: function(response) {
                         console.log(response);
                         if(response=='3') {
-                            window.location.href='dashboard.php'
+                            $("#please_wait").html("<button type='button' class='btn btn-sm btn-primary' disabled>PLease wait...</button>")
+                            setTimeout(() => {
+                                window.location.href='dashboard.php'
+                            }, 1000);
                         }
                         if(response=='4') {
                             $("#msg").html("<p class='text-danger text-center'>Invalid credentials</p>")

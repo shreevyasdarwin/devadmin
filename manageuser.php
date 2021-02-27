@@ -4,7 +4,7 @@ include('global/config.php');
 if($_SESSION['admin']==""){
     header('location:index.php');
 }
-$user = mysqli_query($con,'SELECT * FROM user_register ORDER BY created_date DESC');
+$user = mysqli_query($con,"select u.id,u.mobile,u.email,u.created_date,u.status,u.wallet, CONCAT(d.title,' ',d.fname,' ',d.lname) as fullname from user_register u inner join user_details d on u.id=d.user_id order by u.created_date desc");
 ?>
 <!DOCTYPE html>
 <!--[if IE 9]>         <html class="no-js lt-ie10" lang="en"> <![endif]-->
@@ -25,9 +25,6 @@ $user = mysqli_query($con,'SELECT * FROM user_register ORDER BY created_date DES
     'page-loading'      enables page preloader
 -->
 <div id="page-wrapper">
-    <!-- Preloader -->
-    <!-- Preloader functionality (initialized in js/app.js) - pageLoading() -->
-    <!-- Used only if page preloader is enabled from inc/config (PHP version) or the class 'page-loading' is added in #page-wrapper element (HTML version) -->
     <div class="preloader themed-background">
         <h1 class="push-top-bottom text-light text-center"><strong>Pro</strong>UI</h1>
         <div class="inner">
@@ -35,39 +32,6 @@ $user = mysqli_query($con,'SELECT * FROM user_register ORDER BY created_date DES
             <div class="preloader-spinner hidden-lt-ie10"></div>
         </div>
     </div>
-    <!-- END Preloader -->
-
-    <!-- Page Container -->
-    <!-- In the PHP version you can set the following options from inc/config file -->
-    <!--
-        Available #page-container classes:
-
-        '' (None)                                       for a full main and alternative sidebar hidden by default (> 991px)
-
-        'sidebar-visible-lg'                            for a full main sidebar visible by default (> 991px)
-        'sidebar-partial'                               for a partial main sidebar which opens on mouse hover, hidden by default (> 991px)
-        'sidebar-partial sidebar-visible-lg'            for a partial main sidebar which opens on mouse hover, visible by default (> 991px)
-        'sidebar-mini sidebar-visible-lg-mini'          for a mini main sidebar with a flyout menu, enabled by default (> 991px + Best with static layout)
-        'sidebar-mini sidebar-visible-lg'               for a mini main sidebar with a flyout menu, disabled by default (> 991px + Best with static layout)
-
-        'sidebar-alt-visible-lg'                        for a full alternative sidebar visible by default (> 991px)
-        'sidebar-alt-partial'                           for a partial alternative sidebar which opens on mouse hover, hidden by default (> 991px)
-        'sidebar-alt-partial sidebar-alt-visible-lg'    for a partial alternative sidebar which opens on mouse hover, visible by default (> 991px)
-
-        'sidebar-partial sidebar-alt-partial'           for both sidebars partial which open on mouse hover, hidden by default (> 991px)
-
-        'sidebar-no-animations'                         add this as extra for disabling sidebar animations on large screens (> 991px) - Better performance with heavy pages!
-
-        'style-alt'                                     for an alternative main style (without it: the default style)
-        'footer-fixed'                                  for a fixed footer (without it: a static footer)
-
-        'disable-menu-autoscroll'                       add this to disable the main menu auto scrolling when opening a submenu
-
-        'header-fixed-top'                              has to be added only if the class 'navbar-fixed-top' was added on header.navbar
-        'header-fixed-bottom'                           has to be added only if the class 'navbar-fixed-bottom' was added on header.navbar
-
-        'enable-cookies'                                enables cookies for remembering active color theme when changed from the sidebar links
-    -->
     <div id="page-container" class="sidebar-partial sidebar-visible-lg sidebar-no-animations">
         <!-- Alternative Sidebar -->
         <div id="sidebar-alt">
@@ -80,83 +44,6 @@ $user = mysqli_query($con,'SELECT * FROM user_register ORDER BY created_date DES
                     <a href="page_ready_chat.html" class="sidebar-title">
                         <i class="gi gi-comments pull-right"></i> <strong>Chat</strong>UI
                     </a>
-                    <!-- Chat Users -->
-                    <ul class="chat-users clearfix">
-                        <li>
-                            <a href="javascript:void(0)" class="chat-user-online">
-                                <span></span>
-                                <img src="img/placeholders/avatars/avatar12.jpg" alt="avatar" class="img-circle">
-                            </a>
-                        </li>
-                        <li>
-                            <a href="javascript:void(0)" class="chat-user-online">
-                                <span></span>
-                                <img src="img/placeholders/avatars/avatar15.jpg" alt="avatar" class="img-circle">
-                            </a>
-                        </li>
-                        <li>
-                            <a href="javascript:void(0)" class="chat-user-online">
-                                <span></span>
-                                <img src="img/placeholders/avatars/avatar10.jpg" alt="avatar" class="img-circle">
-                            </a>
-                        </li>
-                        <li>
-                            <a href="javascript:void(0)" class="chat-user-online">
-                                <span></span>
-                                <img src="img/placeholders/avatars/avatar4.jpg" alt="avatar" class="img-circle">
-                            </a>
-                        </li>
-                        <li>
-                            <a href="javascript:void(0)" class="chat-user-away">
-                                <span></span>
-                                <img src="img/placeholders/avatars/avatar7.jpg" alt="avatar" class="img-circle">
-                            </a>
-                        </li>
-                        <li>
-                            <a href="javascript:void(0)" class="chat-user-away">
-                                <span></span>
-                                <img src="img/placeholders/avatars/avatar9.jpg" alt="avatar" class="img-circle">
-                            </a>
-                        </li>
-                        <li>
-                            <a href="javascript:void(0)" class="chat-user-busy">
-                                <span></span>
-                                <img src="img/placeholders/avatars/avatar16.jpg" alt="avatar" class="img-circle">
-                            </a>
-                        </li>
-                        <li>
-                            <a href="javascript:void(0)">
-                                <span></span>
-                                <img src="img/placeholders/avatars/avatar1.jpg" alt="avatar" class="img-circle">
-                            </a>
-                        </li>
-                        <li>
-                            <a href="javascript:void(0)">
-                                <span></span>
-                                <img src="img/placeholders/avatars/avatar4.jpg" alt="avatar" class="img-circle">
-                            </a>
-                        </li>
-                        <li>
-                            <a href="javascript:void(0)">
-                                <span></span>
-                                <img src="img/placeholders/avatars/avatar3.jpg" alt="avatar" class="img-circle">
-                            </a>
-                        </li>
-                        <li>
-                            <a href="javascript:void(0)">
-                                <span></span>
-                                <img src="img/placeholders/avatars/avatar13.jpg" alt="avatar" class="img-circle">
-                            </a>
-                        </li>
-                        <li>
-                            <a href="javascript:void(0)">
-                                <span></span>
-                                <img src="img/placeholders/avatars/avatar5.jpg" alt="avatar" class="img-circle">
-                            </a>
-                        </li>
-                    </ul>
-                    <!-- END Chat Users -->
-
                     <!-- Chat Talk -->
                     <div class="chat-talk display-none">
                         <!-- Chat Info -->
@@ -255,20 +142,6 @@ $user = mysqli_query($con,'SELECT * FROM user_register ORDER BY created_date DES
 
         <!-- Main Container -->
         <div id="main-container">
-            <!-- Header -->
-            <!-- In the PHP version you can set the following options from inc/config file -->
-            <!--
-                Available header.navbar classes:
-
-                'navbar-default'            for the default light header
-                'navbar-inverse'            for an alternative dark header
-
-                'navbar-fixed-top'          for a top fixed header (fixed sidebars with scroll will be auto initialized, functionality can be found in js/app.js - handleSidebar())
-                    'header-fixed-top'      has to be added on #page-container only if the class 'navbar-fixed-top' was added
-
-                'navbar-fixed-bottom'       for a bottom fixed header (fixed sidebars with scroll will be auto initialized, functionality can be found in js/app.js - handleSidebar()))
-                    'header-fixed-bottom'   has to be added on #page-container only if the class 'navbar-fixed-bottom' was added
-            -->
             <?php include("global/nav.php") ?>
             <!-- END Header -->
 
@@ -296,6 +169,7 @@ $user = mysqli_query($con,'SELECT * FROM user_register ORDER BY created_date DES
                             <thead>
                             <tr>
                                 <th class="text-center">SR NO</th>
+                                <th class="text-center">Full name</th>
                                 <th class="text-center">Mobile</th>
                                 <th class="text-center">Email</th>
                                 <th class="text-center">Registered Date</th>
@@ -313,6 +187,7 @@ $user = mysqli_query($con,'SELECT * FROM user_register ORDER BY created_date DES
                                 ?>
                                 <tr>
                                     <td class="text-center"><?php echo $cnt++; ?></td>
+                                    <td class="text-center"><?php echo $row['fullname']; ?></td>
                                     <td class="text-center"><?php echo $row['mobile']; ?></td>
                                     <td class="text-center"><?php echo $row['email']; ?></td>
                                     <td class="text-center"><?php echo $new_date; ?></td>
@@ -395,7 +270,6 @@ $user = mysqli_query($con,'SELECT * FROM user_register ORDER BY created_date DES
                     method: "POST",
                     data: {action: 'deactivate', id: id},
                     success: function (data) {
-
                         swal("User has been deactivated", {
                             icon: "success",
                         });
