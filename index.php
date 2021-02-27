@@ -1,3 +1,8 @@
+<?php 
+include('global/config.php');
+error_reporting(0);
+?>
+
 <!DOCTYPE html>
 <html class="no-js" lang="en">
     <head>
@@ -7,7 +12,7 @@
         <meta name="author" content="pixelcave">
         <meta name="robots" content="noindex, nofollow">
         <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=0"> 
-        <link rel="shortcut icon" href="img/favicon.png"> 
+        <link rel="shortcut icon" href="img/favicon.png">
         <!-- END Icons -->
 
         <!-- Stylesheets -->
@@ -41,6 +46,7 @@
                 background: #444444 !important;
                 background: rgb(0, 18, 70) !important;
             }
+            
         </style>
     </head>
     <body >
@@ -76,10 +82,12 @@
                             </div>
                         </div>
                     </div>
+                    <div id="msg">
+                        <?=  flash() ?>
+                    </div>
                     <div class="form-group form-actions">
-                    <div id="msg"></div>
                         <div class="col-xs-7 text-right">
-                            <div id="please_wait"><button type="button" name="login" id="login" class="btn btn-sm btn-primary">Login</button></div>
+                            <button type="button" name="login" id="login" class="btn btn-sm btn-primary">Login <i class="fa fa-angle-right"></i></button>
                         </div>
                     </div>
                     <div class="form-group">
@@ -140,12 +148,12 @@
                             }, 1000);
                         }
                         if(response=='4') {
-                            $("#msg").html("<p class='text-danger text-center'>Invalid credentials</p>")
-                            return false
+                            location.reload();
                         }
                     }
                 })
             })
+            
         </script>
     </body>
 </html>

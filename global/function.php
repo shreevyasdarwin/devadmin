@@ -2,13 +2,10 @@
 function margin($con)
 {
     if($row = mysqli_fetch_array(mysqli_query($con,"select * from margin")))
-    {
         $response = $row['margin'];
-    }
     else
-    {
         $response = mysqli_error($con);
-    }
+
     return $response;
 }
 
@@ -16,15 +13,14 @@ function margin($con)
 function coupons($con)
 {
     if($row = mysqli_fetch_array(mysqli_query($con,"select count(id) as id from coupons")))
-    {
         $response = $row['id'];
-    }
     else
-    {
         $response = mysqli_error($con);
-    }
+
     return $response;
 }
+
+
 //to display amount in indian format
 function money($num) {
     $explrestunits = "" ;
@@ -42,9 +38,8 @@ function money($num) {
             }
         }
         $thecash = $explrestunits.$lastthree;
-    } else {
+    } else
         $thecash = $num;
-    }
+
     return $thecash; // writes the final format where $currency is the currency symbol.
-}
-?>
+}?>
