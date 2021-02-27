@@ -1,4 +1,5 @@
 <?php
+error_reporting(0);
 session_start();
 include('global/config.php');
 if($_SESSION['admin']==""){
@@ -10,13 +11,9 @@ $margin=$row['margin'];
 
 ?>
 <!DOCTYPE html>
-<!--[if IE 9]>         <html class="no-js lt-ie10" lang="en"> <![endif]-->
-<!--[if gt IE 9]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+<html class="no-js" lang="en">
 <head>
     <?php include("global/head.php") ?>
-    <!-- END Stylesheets -->
-
-    <!-- Modernizr (browser feature detection library) -->
     <script src="js/vendor/modernizr.min.js"></script>
 </head>
 <body>
@@ -50,7 +47,7 @@ $margin=$row['margin'];
                     </div>
                 </div>
                 <!-- END Forms General Header -->
-
+                <?= flash() ?>
                 <div class="row">
                     <div class="col-md-6">
                         <!-- Basic Form Elements Block -->
@@ -74,7 +71,7 @@ $margin=$row['margin'];
                                 </div>
                                 <div class="form-group form-actions">
                                     <div class="col-md-9 col-md-offset-3">
-                                        <button id="update" name="submit" class="btn btn-sm btn-primary"><i class="fa fa-angle-right"></i>Update Margin</button>
+                                        <button id="update" name="submit" class="btn btn-sm btn-primary">Update Margin <i class="fa fa-angle-right"></i></button>
                                     </div>
                                 </div>
                             </div>
@@ -164,14 +161,10 @@ $margin=$row['margin'];
     </div>
 </div>
 <!-- END User Settings -->
-
-<!-- jQuery, Bootstrap.js, jQuery plugins and Custom JS code -->
 <script src="js/vendor/jquery.min.js"></script>
 <script src="js/vendor/bootstrap.min.js"></script>
 <script src="js/plugins.js"></script>
 <script src="js/app.js"></script>
-
-<!-- Load and execute javascript code used only in this page -->
 <script src="js/pages/formsGeneral.js"></script>
 <script>$(function(){ FormsGeneral.init(); });</script>
 <!--sweetalert-->
@@ -180,21 +173,18 @@ $margin=$row['margin'];
 <script>
     $(document).ready(function(){
     $("#update").click(function() {
-                var amount = $("#amount").val();
-                $.ajax({
-                    url: "ajax.php",
-                    method: "POST",
-                    data: {action: 'marginupdate', amt: amount},
-                    success: function (data) {
-                        swal("Margin has been updated", {
-                            icon: "success",
-
-                        });
-                        document.getElementById('amount').value=data;
-                    }
-                });
+        $("#update").text('Please Wait...');
+        var amount = $("#amount").val();
+        $.ajax({
+            url: "ajax.php",
+            method: "POST",
+            data: {marginupdate: '1', amt: amount},
+            success: function (data) {
+                    location.reload();
+                }
             });
         });
+    });
 </script>
 </body>
 </html>

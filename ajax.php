@@ -1,7 +1,7 @@
 <?php
 include('global/config.php');
 include('global/function.php');
-session_start();
+
 //login
 if($_POST['action']=='login') {
     $username = $_POST['username'];
@@ -24,6 +24,7 @@ if($_POST['action']=='login') {
             $_SESSION['admin'] = $res['username'];
     }
         else{
+            set_flash('danger','Oops! Invalid Credentials');
             echo "4"; //invalid credentials
             exit;
         }
@@ -70,7 +71,7 @@ if ($_POST['action']=='activate') {
     }
 }
 //update margin
-if($_POST['action']=='marginupdate')
+if(isset($_POST['marginupdate']))
 {
     $amount = $_POST['amt'];
     $sql = mysqli_query($con,"update margin set margin='$amount'");
@@ -84,14 +85,14 @@ if($_POST['action']=='marginupdate')
             $mail = new PHPMailer;
             $mail->IsSMTP();
             $mail->SMTPAuth = true;
-// $mail->SMTPDebug = 2;
+            // $mail->SMTPDebug = 2;
             $mail->Host = 'mail.darwintrip.com';
             $mail->SMTPSecure = 'ssl';
             $mail->Port = 465;
             $mail->Username = 'info@darwintrip.com';
             $mail->Password = 'Darwin@2020';
-//   $path = 'reseller.pdf';
-//   $mail->AddAttachment($path); NameSizeLast ModifiedTypePermissions
+            //   $path = 'reseller.pdf';
+            //   $mail->AddAttachment($path); NameSizeLast ModifiedTypePermissions
             $mail->IsHTML(true);
             $mail->From = "info@darwintrip.com";
             $mail->FromName = 'DarwinTrip';
@@ -99,42 +100,42 @@ if($_POST['action']=='marginupdate')
             $mail->AddReplyTo('info@darwintrip.com', 'DarwinTrip');
             $mail->Subject = 'Margin set by Admin';
             $mail->Body = '<table align="center" border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse; width: 100%; max-width: 600px;" class="content">
-        <tr>
-            <td align="center" bgcolor="#f0f0f0" style=" color: #ffffff; font-family: Arial, sans-serif; font-size: 36px; font-weight: bold;">
-                <img src="https://darwintrip.com/admin/img/logo.png" alt="darwintrip logo" width="auto" height="152" style="display:block;" />
-            </td>
-        </tr>
-        <tr>
-            <td bgcolor="#f9f9f9" style="padding: 20px 20px 30px 20px; color: #555555; font-family: Arial, sans-serif; font-size: 20px; line-height: 30px;">
-                <p align="center"> Hello, Margin has been changed, below is the margin set by Admin.</p>
-    
-                <b>Margin:</b> ₹' .$amount.'<br>
-                <b>date:</b>' .$date.'
-                </br>
-                <br>
-            </td>
-        </tr>
-        <tr>
-            <td style="padding: 15px 10px 15px 10px;">
-                <table border="0" cellpadding="0" cellspacing="0" width="100%">
-                    <tr>
-                        <td align="center" width="100%" style="color: #999999; font-family: Arial, sans-serif; font-size: 12px;">
-                            &copy; <a href="https://darwintrip.com/admin" style="color: #148e81;">DarwinTrip Admin</a>
-                        </td>
-                    </tr>
-                </table>
-            </td>
-        </tr>
-        </table>';
+            <tr>
+                <td align="center" bgcolor="#f0f0f0" style=" color: #ffffff; font-family: Arial, sans-serif; font-size: 36px; font-weight: bold;">
+                    <img src="https://darwintrip.com/admin/img/logo.png" alt="darwintrip logo" width="auto" height="152" style="display:block;" />
+                </td>
+            </tr>
+            <tr>
+                <td bgcolor="#f9f9f9" style="padding: 20px 20px 30px 20px; color: #555555; font-family: Arial, sans-serif; font-size: 20px; line-height: 30px;">
+                    <p align="center"> Hello, Margin has been changed, below is the margin set by Admin.</p>
+        
+                    <b>Margin:</b> ₹' .$amount.'<br>
+                    <b>date:</b>' .$date.'
+                    </br>
+                    <br>
+                </td>
+            </tr>
+            <tr>
+                <td style="padding: 15px 10px 15px 10px;">
+                    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                        <tr>
+                            <td align="center" width="100%" style="color: #999999; font-family: Arial, sans-serif; font-size: 12px;">
+                                &copy; <a href="https://darwintrip.com/admin" style="color: #148e81;">DarwinTrip Admin</a>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            </table>';
             $mail->AddAddress('zaeemansari87@gmail.com');
-            if($mail->send())
-            {
-                echo $row['margin'];
+            if($mail->send()){
+                set_flash('success','Margin Updated Successfully');
+                echo 1;
             }
         }
-        else
-        {
-            echo mysqli_error($con);
+        else{
+            echo 0;
+            set_flash('danger','Something went wrong');
         }
     }
     else
@@ -170,39 +171,39 @@ if($_POST['action']=='forgotpass')
     $mail->AddReplyTo('info@darwintrip.com', 'DarwinTrip');
     $mail->Subject = 'Username and password of admin panel';
     $mail->Body = '<table align="center" border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse; width: 100%; max-width: 600px;" class="content">
-
-    <tr>
-        <td align="center" bgcolor="#f0f0f0" style=" color: #ffffff; font-family: Arial, sans-serif; font-size: 36px; font-weight: bold;">
-            <img src="https://darwintrip.com/admin/img/logo.png" alt="darwintrip logo" width="auto" height="152" style="display:block;" />
-        </td>
-    </tr>
-    <tr>
-        <td bgcolor="#f9f9f9" style="padding: 20px 20px 30px 20px; color: #555555; font-family: Arial, sans-serif; font-size: 20px; line-height: 30px;">
-            <p align="center"> Hello Admin, your request for login credentials are given below.</p>
-            <b>Username:</b>'.$user.' <br>
-            <b>Password:</b>'.$pass.'
-            </br>
-            <br>
-        </td>
-    </tr>
-    <tr>
-        <td style="padding: 15px 10px 15px 10px;">
-            <table border="0" cellpadding="0" cellspacing="0" width="100%">
-                <tr>
-                    <td align="center" width="100%" style="color: #999999; font-family: Arial, sans-serif; font-size: 12px;">
-                        &copy; <a href="https://darwintrip.com/admin" style="color: #148e81;">DarwinTrip Admin</a>
-                    </td>
-                </tr>
-            </table>
-        </td>
-    </tr>
-</table>';
+        <tr>
+            <td align="center" bgcolor="#f0f0f0" style=" color: #ffffff; font-family: Arial, sans-serif; font-size: 36px; font-weight: bold;">
+                <img src="https://darwintrip.com/admin/img/logo.png" alt="darwintrip logo" width="auto" height="152" style="display:block;" />
+            </td>
+        </tr>
+        <tr>
+            <td bgcolor="#f9f9f9" style="padding: 20px 20px 30px 20px; color: #555555; font-family: Arial, sans-serif; font-size: 20px; line-height: 30px;">
+                <p align="center"> Hello Admin, your request for login credentials are given below.</p>
+                <b>Username:</b>'.$user.' <br>
+                <b>Password:</b>'.$pass.'
+                </br>
+                <br>
+            </td>
+        </tr>
+        <tr>
+            <td style="padding: 15px 10px 15px 10px;">
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td align="center" width="100%" style="color: #999999; font-family: Arial, sans-serif; font-size: 12px;">
+                            &copy; <a href="https://darwintrip.com/admin" style="color: #148e81;">DarwinTrip Admin</a>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>';
     $mail->AddAddress('zaeemansari87@gmail.com');
     if($mail->send())
     {
         echo "success";
     }
 }
+
 //fetch dashboard details
 if($_POST['action']=='dashboard')
 {
@@ -540,7 +541,7 @@ if ($_POST['action']=='activateblog') {
 }
 
 //send feedback mail for charter enquiry
-if($_POST['action'] == 'feedback'){
+if(isset($_POST['feedback'])){
     $id=$_POST['id'];
     $feedback = mysqli_query($con,"update charter_enq set status='1' where id='$id'");
     $user = mysqli_query($con,"select c.*,CONCAT(u.fname,' ',u.lname) as fullname,u.phone,u.email from user_details as u inner join charter_enq as c on c.user_id=u.user_id where c.id = '$id'");
@@ -566,18 +567,23 @@ if($_POST['action'] == 'feedback'){
         $mail->AddReplyTo('info@darwintrip.com', 'DarwinTrip');
         $mail->Subject = 'Feedback regarding your charter enquiry';
         $mail->Body = "Dear ".$row['fullname'].", Thank you for submitting your inquiry of our charter flight services.<br>
-                       Description: of flight details <br>
-                       From: ".$row['source']." <br>
-                       To: ".$row['destination']." <br>
-                       Departure Date: ".$row['d_date']." <br>
-                       Return Date: ".$row['r_date']." <br>
-                       Total no of passangers: ".$row['passenger']." <br>        
-                       We hope that we have solved all your queries regarding our chartered flight services.";
+        Description: of flight details <br>
+        From: ".$row['source']." <br>
+        To: ".$row['destination']." <br>
+        Departure Date: ".$row['d_date']." <br>
+        Return Date: ".$row['r_date']." <br>
+        Total no of passangers: ".$row['passenger']." <br>        
+        We hope that we have solved all your queries regarding our chartered flight services.";
         $mail->AddAddress($row['email']);
-        $mail->send();
+        if($mail->send()){
+            set_flash('success','Feedback Send Successfully');
+        }else{
+            set_flash('success','Somthing went wrong');
+        }
     }
     else{
         echo mysqli_error($con);
+        set_flash('danger','Something went Wrong');
     }
 
 }
