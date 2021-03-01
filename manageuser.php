@@ -260,7 +260,7 @@ $user = mysqli_query($con,"select u.id,u.mobile,u.email,u.created_date,u.status,
       </div>
       <div class="modal-footer justify-content-between">
         <button type="button" class="btn btn-default float-right" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" id="addWalletAmount">Update</button>
+        <button type="button" class="btn btn-primary" name="addWalletAmount" id="addWalletAmount">Update</button>
       </div>
     </div>
   </form>
@@ -304,7 +304,7 @@ $user = mysqli_query($con,"select u.id,u.mobile,u.email,u.created_date,u.status,
         $.ajax({
           type: 'POST',
           url : 'ajax.php',
-          data: { addWalletAmount: '1', id: id, amount: amount },
+          data: { action: 'addWalletAmount', id: id, amount: amount },
           success: function(response) {
               console.log(response);
             //   return

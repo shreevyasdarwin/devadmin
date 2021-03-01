@@ -3,7 +3,7 @@ include('global/config.php');
 include('global/function.php');
 
 //login
-if(isset($_POST['login'])) {
+if(isset($_POST['action']) && $_POST['action'] == 'login') {
     $username = $_POST['username'];
     $password = $_POST['password'];
     if(!$username) {
@@ -30,7 +30,7 @@ if(isset($_POST['login'])) {
         }
 }
 // update admin password
-if(isset($_POST['changepassword'])){
+if(isset($_POST['action']) && $_POST['action'] == 'changepassword'){
     $npass = $_POST['npass'];
     $cpass = $_POST['cpass'];
     if(!$npass){
@@ -60,7 +60,7 @@ if (isset($_POST['deactivate'])){
     }
 }
 //to activate user
-if (isset($_POST['activate'])) {
+if (isset($_POST['action']) && $_POST['action'] == 'activate') {
     $id=$_POST['id'];
     $activate = mysqli_query($con,"UPDATE user_register SET status='1' WHERE id=$id");
     if ($activate) {
@@ -71,9 +71,9 @@ if (isset($_POST['activate'])) {
     }
 }
 //update margin
-if(isset($_POST['marginupdate']))
+if(isset($_POST['action']) && $_POST['action'] == 'marginupdate')
 {
-    $amount = $_POST['amt'];
+    $amount = $_POST['amount'];
     $sql = mysqli_query($con,"update margin set margin='$amount'");
     if($sql) {
         $row = mysqli_fetch_array(mysqli_query($con, "select margin from margin"));
@@ -144,7 +144,7 @@ if(isset($_POST['marginupdate']))
     }
 }
 //Forgot password code
-if(isset($_POST['forgotpass']))
+if(isset($_POST['action']) && $_POST['action'] == 'forgotpass')
 {
     $sql = mysqli_query($con,"select * from admin where id=1");
     $row=mysqli_fetch_array($sql);
@@ -205,7 +205,7 @@ if(isset($_POST['forgotpass']))
 }
 
 //fetch dashboard details
-if(isset($_POST['dashboard']))
+if(isset($_POST['action']) && $_POST['action'] == 'dashboard')
 {
     //total flight booking
     $res = mysqli_fetch_array(mysqli_query($con,"SELECT COUNT(id) as totalflight FROM `booking_details` WHERE type=1"));
@@ -320,7 +320,7 @@ if(isset($_POST['dashboard']))
     echo json_encode($rows);
 }
 //add holiday package
-if(isset($_POST['addpackage']))
+if(isset($_POST['action']) && $_POST['action'] == 'addpackage')
 {
     $name = $_POST['name'];
     $img = $_FILES['img']['name'];
@@ -346,7 +346,7 @@ if(isset($_POST['addpackage']))
 }
 
 //add coupons
-if(isset($_POST['createcoupons']))
+if(isset($_POST['action']) && $_POST['action'] == 'createcoupons')
 {
     $name = $_POST['name'];
     $amt = $_POST['discount'];
@@ -363,7 +363,7 @@ if(isset($_POST['createcoupons']))
 
 //activatecoupons
 
-if (isset($_POST['activatecoupons'])) {
+if (isset($_POST['action']) && $_POST['action'] == 'activatecoupons') {
     $id=$_POST['id'];
     if (mysqli_query($con,"update coupons set status='1' WHERE id='$id'")) {
         echo "success";
@@ -374,7 +374,7 @@ if (isset($_POST['activatecoupons'])) {
 }
 
 //deactivate coupons
-if (isset($_POST['deactivatecoupons'])) {
+if (isset($_POST['action']) && $_POST['action'] == 'deactivatecoupons') {
     $id=$_POST['id'];
     if (mysqli_query($con,"update coupons set status='0' WHERE id='$id'")) {
         echo "success";
@@ -385,7 +385,7 @@ if (isset($_POST['deactivatecoupons'])) {
 }
 
 //paid payment
-if(isset($_POST['paid'])){
+if(isset($_POST['action']) && $_POST['action'] == 'paid'){
     $id=$_POST['id'];
     if(mysqli_query($con,"update payment_refund set status='1' where id='$id'")){
         set_flash('success','Amount Paid Successfully');
@@ -397,7 +397,7 @@ if(isset($_POST['paid'])){
 }
 
 //reject payment
-if(isset($_POST['reject'])){
+if(isset($_POST['action']) && $_POST['action'] == 'reject'){
     $id=$_POST['id'];
     if(mysqli_query($con,"update payment_refund set status='2' where id='$id'")){
         set_flash('success','Amount Rejected Successfully');
@@ -408,7 +408,7 @@ if(isset($_POST['reject'])){
 }
 
 //accept visa
-if(isset($_POST['approvevisa'])){
+if(isset($_POST['action']) && $_POST['action'] == 'approvevisa'){
     $id=$_POST['id'];
     $approve = mysqli_query($con,"update visa set status='1' where id='$id'");
     if($approve){
@@ -443,7 +443,7 @@ if(isset($_POST['approvevisa'])){
 }
 
 //reject visa
-if(isset($_POST['rejectvisa'])){
+if(isset($_POST['action']) && $_POST['action'] == 'rejectvisa'){
     $id=$_POST['id'];
     $reject = mysqli_query($con,"update visa set status='0' where id='$id'");
     if($reject){
@@ -477,7 +477,7 @@ if(isset($_POST['rejectvisa'])){
     }
 }
 //hotel paid
-if(isset($_POST['hotelpaid'])){
+if(isset($_POST['action']) && $_POST['action'] == 'hotelpaid'){
     $id=$_POST['paid'];
     if(mysqli_query($con,"update payment_refund set refund_date=CURDATE(), status='1' where id='$id'")){
         echo "success";
@@ -487,7 +487,7 @@ if(isset($_POST['hotelpaid'])){
     }
 }
 //hotel reject
-if(isset($_POST['hotelreject'])){
+if(isset($_POST['action']) && $_POST['action'] == 'hotelreject'){
     $id=$_POST['reject'];
     if(mysqli_query($con,"update payment_refund set refund_date=CURDATE(), status='2' where id='$id'")){
         echo "success";
@@ -497,7 +497,7 @@ if(isset($_POST['hotelreject'])){
     }
 }
 // cancel hotel paid
-if(isset($_POST['cancelpaid'])){
+if(isset($_POST['action']) && $_POST['action'] == 'cancelpaid'){
     $id=$_POST['id'];
     if(mysqli_query($con,"update hotel_cancel_booking set  status='1' where id='$id'")){
         echo "success";
@@ -507,7 +507,7 @@ if(isset($_POST['cancelpaid'])){
     }
 }
 // cancel hotel reject
-if(isset($_POST['cancelreject'])){
+if(isset($_POST['action']) && $_POST['action'] == 'cancelreject'){
     $id=$_POST['id'];
     if(mysqli_query($con,"update hotel_cancel_booking set status='2' where id='$id'")){
         echo "success";
@@ -517,7 +517,7 @@ if(isset($_POST['cancelreject'])){
     }
 }
 //to deactivate blog
-if (isset($_POST['deactivateblog'])){
+if (isset($_POST['action']) && $_POST['action'] == 'deactivateblog'){
     $id=$_POST['id'];
     $deactivate = mysqli_query($con,"UPDATE blog SET status='0' WHERE id='$id'");
     if ($deactivate) {
@@ -529,7 +529,7 @@ if (isset($_POST['deactivateblog'])){
 }
 
 //to activate blog
-if (isset($_POST['activateblog'])) {
+if (isset($_POST['action']) && $_POST['action'] == 'activateblog') {
     $id=$_POST['id'];
     $activate = mysqli_query($con,"UPDATE blog SET status='1' WHERE id='$id'");
     if ($activate) {
@@ -541,7 +541,7 @@ if (isset($_POST['activateblog'])) {
 }
 
 //send feedback mail for charter enquiry
-if(isset($_POST['feedback'])){
+if(isset($_POST['action']) && $_POST['action'] == 'feedback'){
     $id=$_POST['id'];
     $feedback = mysqli_query($con,"update charter_enq set status='1' where id='$id'");
     $user = mysqli_query($con,"select c.*,CONCAT(u.fname,' ',u.lname) as fullname,u.phone,u.email from user_details as u inner join charter_enq as c on c.user_id=u.user_id where c.id = '$id'");
@@ -578,7 +578,7 @@ if(isset($_POST['feedback'])){
         if($mail->send()){
             set_flash('success','Feedback Send Successfully');
         }else{
-            set_flash('success','Somthing went wrong');
+            set_flash('danger','Somthing went wrong');
         }
     }
     else{
@@ -589,7 +589,7 @@ if(isset($_POST['feedback'])){
 }
 
 //add wallet amount
-if(isset($_POST['addWalletAmount'])){
+if(isset($_POST['action']) && $_POST['action'] == 'addWalletAmount'){
     $id = $_POST['id'];
     $amount = $_POST['amount'];
     $stmt = $pdo->prepare('update user_register set wallet=wallet+? where id=?');

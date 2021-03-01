@@ -137,8 +137,9 @@ $user = mysqli_query($con,"select c.*,CONCAT(u.fname,' ',u.lname) as fullname,u.
         $.ajax({
             url: "ajax.php",
             method: "POST",
-            data: {feedback:'1', id: id},
-            success: function (data) {
+            data: {action:'feedback', id: id},
+            success: function (response) {
+                console.log(response);
                 location.reload();
             }
         });

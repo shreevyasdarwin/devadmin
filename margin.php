@@ -71,7 +71,7 @@ $margin=$row['margin'];
                                 </div>
                                 <div class="form-group form-actions">
                                     <div class="col-md-9 col-md-offset-3">
-                                        <button id="update" name="submit" class="btn btn-sm btn-primary">Update Margin <i class="fa fa-angle-right"></i></button>
+                                        <button id="marginupdate" name="marginupdate" class="btn btn-sm btn-primary">Update Margin <i class="fa fa-angle-right"></i></button>
                                     </div>
                                 </div>
                             </div>
@@ -172,13 +172,13 @@ $margin=$row['margin'];
 <!--activate / deactivate user with ajax-->
 <script>
     $(document).ready(function(){
-    $("#update").click(function() {
-        $("#update").text('Please Wait...');
+    $("#marginupdate").click(function() {
+        $("#marginupdate").text('Please Wait...');
         var amount = $("#amount").val();
         $.ajax({
             url: "ajax.php",
             method: "POST",
-            data: {marginupdate: '1', amt: amount},
+            data: {action: 'marginupdate', amount: amount},
             success: function (data) {
                     location.reload();
                 }

@@ -140,6 +140,7 @@ error_reporting(0);
                     method: 'POST',
                     data: { action: 'login', username: username, password: password },
                     success: function(response) {
+                        console.log('in');
                         console.log(response);
                         if(response=='3') {
                             $("#please_wait").html("<button type='button' class='btn btn-sm btn-primary' disabled>PLease wait...</button>")

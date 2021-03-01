@@ -189,13 +189,12 @@ $book = mysqli_query($con,"SELECT CONCAT(u.fname,' ',u.lname) as fullname,p.* FR
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
 <script>
     $('#paid').click(function () {
-
         var  id = $('#paid').val();
         console.log(id);
         $.ajax({
             url: "ajax.php",
             method: "POST",
-            data: {paid: '1', id: id},
+            data: {action: 'paid', id: id},
             success: function (data) {
                 location.reload();
             }
@@ -205,13 +204,12 @@ $book = mysqli_query($con,"SELECT CONCAT(u.fname,' ',u.lname) as fullname,p.* FR
 
 <script>
     $('#reject').click(function () {
-
         var  id = $('#reject').val();
         console.log(id);
         $.ajax({
             url: "ajax.php",
             method: "POST",
-            data: {reject: '1', id: id},
+            data: {action: 'reject', id: id},
             success: function (data) {
                 location.reload();
             }
