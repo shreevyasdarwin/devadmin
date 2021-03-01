@@ -59,6 +59,8 @@ $book = mysqli_query($con,'SELECT u.user_id,CONCAT(u.fname," ", u.lname) as full
 
                 <!-- Datatables Content -->
                 <div class="block full">
+
+                <?= flash() ?>
                     <div class="block-title">
                         <h2><strong>Hotel</strong> Bookings</h2>
                     </div>
@@ -98,7 +100,7 @@ $book = mysqli_query($con,'SELECT u.user_id,CONCAT(u.fname," ", u.lname) as full
                                 <td class="text-center">&#x20B9;<?php echo money($row['booking_amt']); ?></td>
                                 <td class="text-center"><?php echo $row['created_date']; ?></td>
                                 <td class="text-center"><a href="view_hotel_booking_details.php?id=<?php echo $row['id'] ?>" class="btn btn-link" target="_blank">View details</a></td>
-                                <td class="text-center"><a href="hotelinvoice.php?id=<?php echo $row['id'] ?>" class="btn btn-link" target="_blank">View details</a></td>
+                                <td class="text-center"><a href="hotelinvoice.php?id=<?php echo $row['id'] ?>" class="btn btn-link" target="_blank">View Invoice</a></td>
                                 <td class="text-center"><?php echo date('d-m-Y',strtotime(($row['updated_date']))); ?></td>
                             </tr>
                             <?php } ?>
