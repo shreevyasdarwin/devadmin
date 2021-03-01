@@ -480,20 +480,22 @@ if(isset($_POST['action']) && $_POST['action'] == 'rejectvisa'){
 if(isset($_POST['action']) && $_POST['action'] == 'hotelpaid'){
     $id=$_POST['paid'];
     if(mysqli_query($con,"update payment_refund set refund_date=CURDATE(), status='1' where id='$id'")){
-        echo "success";
+        set_flash('success','Paid Successfully.');
     }
     else{
         echo mysqli_error($con);
+        set_flash('danger','Something went wrong');
     }
 }
 //hotel reject
 if(isset($_POST['action']) && $_POST['action'] == 'hotelreject'){
     $id=$_POST['reject'];
     if(mysqli_query($con,"update payment_refund set refund_date=CURDATE(), status='2' where id='$id'")){
-        echo "success";
+        set_flash('success','Rejected Successfully.');
     }
     else{
         echo mysqli_error($con);
+        set_flash('danger','Something went wrong');
     }
 }
 // cancel hotel paid

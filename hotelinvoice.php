@@ -1,7 +1,12 @@
 <?php 
+    error_reporting(0);
+    include('global/config.php');
+    $id = $_GET['id'];
+    $sql = mysqli_fetch_assoc(mysqli_query($con,"select u.*,h.* from hotel_booking h inner join user_details u on h.userid = u.user_id where h.id = '$id'"));    
+    // exit("select u.*,h.* from hotel_booking h inner join user_details u on h.userid = u.id where h.id = '$id'");
 
+    $pax_details = json_decode($sql['pax_details'],true);
 ?>
-
 <!DOCTYPE HTML>
 <html>
 
@@ -12,12 +17,12 @@
     <link href="images/favicon.png" rel="icon" />
     <title>Darwin Trip - Flight Invoice</title>
     <meta name="author" content="harnishdesign.net">
-    <!-- Web Fonts         ============================================= -->
+    <!-- Web Fonts============================================= -->
     <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900' type='text/css'>
-    <!--Genrate PDF Script-->
+    <!--Genrate PDF Script ============================================= -->
     <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.min.js"></script>
-    <!-- Bootstrap -->  
+    <!-- Bootstrap ============================================= -->    
     <style>
         :root {
             --blue: #007bff;
@@ -17001,7 +17006,7 @@
             font-weight: 900
         }
     </style>
-    <!-- Styling -->
+    <!-- Styling ============================================= -->
     <style>
         body {
             background: #e7e9ed;
@@ -20761,7 +20766,7 @@
         }
     </style>
 
-    <!--print css -->
+    <!--print css ============================================= -->
     <style>
         @page {
             size: A4;
@@ -20824,18 +20829,18 @@
             <div class="row align-items-center">
                 <div class="col-sm-7 text-center text-sm-left"><img src="http://www.darwintrip.com/img/darwintriplogo.png" title="Darwintrip" /></div>
                 <div class="col-sm-5 text-center text-sm-right">
-                    <p class="mb-0">Booking ID: <?php echo $bookid ?></p>
-                    <p class="mb-0">Booked on: <?php echo date('d F, y');  ?></p>
+                    <p class="mb-0">Booking ID: <?= $sql['booking_id']; ?></p>
+                    <p class="mb-0">Booked on: <?= date('d F, y',strtotime($sql['created_date']));  ?></p>
                 </div>
             </div>
             <hr>
             <div class="row">
                 <div class="col-sm-6">
                     <p class="mb-0">DarwinTrip GST : 27AAECD3441P1ZD</p>
-                    <p class="mb-0">Customer GST : <?php echo $gst ?></p>
+                    <p class="mb-0">Customer GST : <?= $sql['gst'] == '' ? '---' : '' ?></p>
                 </div>
                 <div style=" margin-top:15px;   text-align: right;" class="col-lg-6">
-                    <h6>Status: <span style="padding: 3px 15px;color: white; background: #1c6544; font-size: 18px;"><?php echo $msg ?></span></h6>
+                    <h6>Status: <span style="padding: 3px 15px;color: white; background: #1c6544; font-size: 18px;"><?= $sql['status'] == '0' ? 'Confirmed' : '' ?></span></h6>
                 </div>
             </div>
             <hr>
@@ -20855,7 +20860,7 @@
                             <tr>
                                 <td class="text-center">
                                     <b> App Reference no.</b> <br>
-                                    <h4 style="font-size: 18px;"><?php echo $apprefno ?></h4>
+                                    <h4 style="font-size: 18px;"><?= $sql['apprefernce_no'] ?></h4>
                                 </td>
                             </tr>
                         </tbody>
@@ -20864,7 +20869,7 @@
             </div>
             <br />
             <div class="card">
-                <div class="card-header"> <span class="font-weight-600 text-4">Hotel Details</span> </div>
+                <div class="card-header"> <span class="font-weight-600 text-4">Booking Details</span> </div>
                 <div class="card-body">
                     <div class="table-responsive">
                         <table class="table table-bordered">
@@ -20873,16 +20878,14 @@
                                     <td class="text-center"><strong>Check In</strong></td>
                                     <td class="text-center"><strong>Check Out</strong></td>
                                     <td class="text-center"><strong>No of Room</strong></td>
-                                    <td class="text-center"><strong>Room Type</strong></td>
                                     <td class="text-center"><strong>Total Guest</strong></td>
                                 </tr>
                             </thead>
                             <tbody>
-                                <td class="text-center"><strong><?= date('d F, y', strtotime($checkin)); ?></strong></td>
-                                <td class="text-center"><strong><?= date('d F, y', strtotime($checkout)); ?></strong></td>
-                                <td class="text-center"><strong><?= $noofroom; ?></strong></td>
-                                <td class="text-center"><strong><?= $roomname; ?></strong></td>
-                                <td class="text-center"><strong><?= $totalguest; ?></strong></td>
+                                <td class="text-center"><strong><?= date('d F, y', strtotime($sql['checkin'])); ?></strong></td>
+                                <td class="text-center"><strong><?= date('d F, y', strtotime($sql['checkout'])); ?></strong></td>
+                                <td class="text-center"><strong><?= $sql['noofroom']; ?></strong></td>
+                                <td class="text-center"><strong><?= $sql['totalguest'] ?></strong></td>
                             </tbody>
                         </table>
                     </div>
@@ -20902,9 +20905,13 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php
-                                echo $psgr;
-                                ?>
+                            <?php $i = 1; foreach($pax_details as $key=>$value){?>
+                                <tr>
+                                    <td class="text-center"><?=  $i; ?></td>
+                                    <td class="text-center"><?= $value['pax_name'] ?></td>
+                                    <td class="text-center"><?= $value['pax_type'] ?></td>
+                                </tr>
+                            <?php $i++; } ?>
                             </tbody>
                         </table>
                     </div>
@@ -20924,15 +20931,15 @@
                             <tbody>
                                 <tr>
                                     <td><span class="text-3"><span class="font-weight-500">Hotel Name</span></span><br> </td>
-                                    <td class="text-center"><?php echo $hotelname ?></td>
+                                    <td class="text-center"><?= $sql['room_name']; ?></td>
                                 </tr>
                                 <tr>
                                     <td><span class="text-3"><span class="font-weight-500">Address</span></span><br> </td>
-                                    <td class="text-center"><?php echo $address ?></td>
+                                    <td class="text-center"><?= $sql['hotel_add']; ?></td>
                                 </tr>
                                 <tr>
                                     <td><span class="text-3"><span class="font-weight-500">Contact Number</span></span> </td>
-                                    <td class="text-center"><?php echo $phone ?></td>
+                                    <td class="text-center"><?= $sql['hotel_phone']; ?></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -20950,7 +20957,7 @@
                             <tbody>
                                 <tr>
                                     <td><span class="text-3"><span class="font-weight-500"><strong>Grand Total</strong></span></span><br> </td>
-                                    <td class="text-center"><strong><?php echo $_SESSION['currency'] . ' ' . $bookamt ?></strong></td>
+                                    <td class="text-center"><strong><?= ₹ . ' ' . $sql['booking_amt'] ?></strong></td>
                                 </tr>
                             </tbody>
                         </table>
