@@ -17,7 +17,7 @@ $book = mysqli_query($con,"SELECT CONCAT(u.fname,' ',u.lname) as fullname,p.* FR
     <script src="js/vendor/modernizr.min.js"></script>
     <style>
         td{
-            height: 40px; !important;
+            height: 40px !important;
         }
     </style>
 </head>

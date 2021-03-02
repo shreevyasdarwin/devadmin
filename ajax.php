@@ -2,33 +2,6 @@
 include('global/config.php');
 include('global/function.php');
 
-//login
-if(isset($_POST['action']) && $_POST['action'] == 'login') {
-    $username = $_POST['username'];
-    $password = $_POST['password'];
-    if(!$username) {
-        echo "1";
-        exit;
-    }
-    if(!$password) {
-        echo "2";
-        exit;
-    }
-    // echo "select * from admin where username='$username' and password='$password'";
-    // exit;
-    $stmt = $pdo->prepare("select * from admin where username=? and password=?");
-    $stmt->execute([$username, $password]);
-    if($stmt->rowCount() > 0){
-        $res = $stmt->fetch(PDO::FETCH_ASSOC);
-            echo "3"; //login successful
-            $_SESSION['admin'] = $res['username'];
-    }
-        else{
-            set_flash('danger','Oops! Invalid Credentials');
-            echo "4"; //invalid credentials
-            exit;
-        }
-}
 // update admin password
 if(isset($_POST['action']) && $_POST['action'] == 'changepassword'){
     $npass = $_POST['npass'];

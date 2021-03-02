@@ -106,54 +106,8 @@ error_reporting(0);
         <script src="js/vendor/bootstrap.min.js"></script>
         <script src="js/plugins.js"></script>
         <script src="js/app.js"></script>
-        <!--sweetalert2-->
-        <script>
-            $('#forgotpass').click(function()
-            {
-                $.ajax({
-                    url: "ajax.php",
-                    method: "POST",
-                    data: {action: 'forgotpass'},
-                    success: function (response) {
-                        $("#forgot_msg").html("<p class='text-success'>Username & Password has mailed to admin's email</p>")
-                        return;
-                    }
-                });
-            });
-        </script>
+        <script src="js/ajax_pages/login.js"></script>
         <!-- Load and execute javascript code used only in this page -->
-        <script src="js/pages/login.js"></script>
-        <script>
-            $("#login").click(function() {
-                const username = $("#username").val()
-                const password = $("#password").val()
-                if(!username){
-                    $("#name_err").html("<p class='text-danger'>Please fill out this field</p>")
-                    return false
-                }
-                if(!password){
-                    $("#pass_err").html("<p class='text-danger'>Please fill out this field</p>")
-                    return false
-                }
-                $.ajax({
-                    url: 'ajax.php',
-                    method: 'POST',
-                    data: { action: 'login', username: username, password: password },
-                    success: function(response) {
-                        console.log('in');
-                        console.log(response);
-                        if(response=='3') {
-                            $("#please_wait").html("<button type='button' class='btn btn-sm btn-primary' disabled>PLease wait...</button>")
-                            setTimeout(() => {
-                                window.location.href='dashboard.php'
-                            }, 1000);
-                        }
-                        if(response=='4') {
-                            location.reload();
-                        }
-                    }
-                })
-            })
-        </script>
+        
     </body>
 </html>
