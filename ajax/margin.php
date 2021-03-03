@@ -56,7 +56,7 @@ if(isset($_POST['marginupdate']) && $_POST['marginupdate'] == '1' && isset($_SES
                 </td>
             </tr>
             </table>';
-            $mail->AddAddress('zaeemansari87@gmail.com');
+            $mail->AddAddress('zaeem.ansari@darwinpgc.com');
             if($mail->send()){
                 set_flash('success','Margin Updated Successfully');
                 echo 1;
