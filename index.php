@@ -108,6 +108,5 @@ error_reporting(0);
         <script src="js/app.js"></script>
         <script src="js/ajax_pages/login.js"></script>
         <!-- Load and execute javascript code used only in this page -->
-        
     </body>
 </html>
