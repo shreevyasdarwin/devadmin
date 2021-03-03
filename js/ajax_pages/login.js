@@ -1,6 +1,6 @@
 // Login js
 $("#login").click(function() {
-    console.log(11111);
+    $("#login").text('Please Wait..');
     const username = $("#username").val()
     const password = $("#password").val()
     if(!username){
