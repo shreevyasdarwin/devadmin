@@ -1,14 +1,16 @@
 // Login js
-$("#login").click(function() {
+$("#login").click(() => {
     $("#login").text('Please Wait..');
     const username = $("#username").val()
     const password = $("#password").val()
     if(!username){
-        $("#name_err").html("<p class='text-danger'>Please fill out this field</p>")
+        $("#name_err").html("<p class='text-danger'>Please fill out this field</p>");
+        $("#login").text('Login');
         return false
     }
     if(!password){
         $("#pass_err").html("<p class='text-danger'>Please fill out this field</p>")
+        $("#login").text('Login');
         return false
     }
     $.ajax({
@@ -16,8 +18,8 @@ $("#login").click(function() {
         method: 'POST',
         data: { login: '1', username: username, password: password },
         success: function(response) {
-            console.log('in');
-            console.log(response);
+            // console.log('in');
+            // console.log(response);
             if(response=='3') {
                 $("#please_wait").html("<button type='button' class='btn btn-sm btn-primary' disabled>PLease wait...</button>")
                 setTimeout(() => {

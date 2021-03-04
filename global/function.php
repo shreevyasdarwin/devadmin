@@ -20,26 +20,29 @@ function coupons($con)
     return $response;
 }
 
+function IND_money_format($number){
+    $decimal = (string)($number - floor($number));
+    $money = floor($number);
+    $length = strlen($money);
+    $delimiter = '';
+    $money = strrev($money);
 
-//to display amount in indian format
-function money($num) {
-    $explrestunits = "" ;
-    if(strlen($num)>3) {
-        $lastthree = substr($num, strlen($num)-3, strlen($num));
-        $restunits = substr($num, 0, strlen($num)-3); // extracts the last three digits
-        $restunits = (strlen($restunits)%2 == 1)?"0".$restunits:$restunits; // explodes the remaining digits in 2's formats, adds a zero in the beginning to maintain the 2's grouping.
-        $expunit = str_split($restunits, 2);
-        for($i=0; $i<sizeof($expunit); $i++) {
-            // creates each of the 2's group and adds a comma to the end
-            if($i==0) {
-                $explrestunits .= (int)$expunit[$i].","; // if is first value , convert into integer
-            } else {
-                $explrestunits .= $expunit[$i].",";
-            }
+    for($i=0;$i<$length;$i++){
+        if(( $i==3 || ($i>3 && ($i-1)%2==0) )&& $i!=$length){
+            $delimiter .=',';
         }
-        $thecash = $explrestunits.$lastthree;
-    } else
-        $thecash = $num;
+        $delimiter .=$money[$i];
+    }
 
-    return $thecash; // writes the final format where $currency is the currency symbol.
-}?>
+    $result = strrev($delimiter);
+    $decimal = preg_replace("/0\./i", ".", $decimal);
+    $decimal = substr($decimal, 0, 3);
+
+    if( $decimal != '0'){
+        $result = $result.$decimal;
+    }
+
+    return $result;
+}
+
+?>

@@ -106,6 +106,8 @@ error_reporting(0);
         <script src="js/vendor/bootstrap.min.js"></script>
         <script src="js/plugins.js"></script>
         <script src="js/app.js"></script>
+
+        <!-- Login js -->
         <script src="js/ajax_pages/login.js"></script>
         <!-- Load and execute javascript code used only in this page -->
         

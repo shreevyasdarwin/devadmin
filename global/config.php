@@ -46,7 +46,6 @@ function set_flash($type,$message){
     $_SESSION['flash']['msg'] = $message;
 }
 
-
 function flash(){
     if ($_SESSION['flash'] != '') {
         $type = $_SESSION['flash']['type'];
