@@ -96,7 +96,7 @@ $visa = mysqli_query($con,"SELECT * FROM visa ORDER BY apply_date DESC");
                                         <?php
                                         if($row['status']=='0'){
                                         ?>
-                                        <button class="btn btn-success" name="acceptVisa" id="acceptVisa" onclick="accpetVisa(this)" data-id="<?= $row['id'] ?>">Approve</button>
+                                            <button class="btn btn-success" name="acceptVisa" id="acceptVisa" onclick="accpetVisa(this)" data-id="<?= $row['id'] ?>">Approve</button>
                                         <?php }if($row['status']=='2'){ ?>
                                             <h4 class="text-danger" disabled>Application rejected</h4>
                                         <?php } ?>
