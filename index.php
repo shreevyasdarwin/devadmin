@@ -110,6 +110,5 @@ error_reporting(0);
         <!-- Login js -->
         <script src="js/ajax_pages/login.js"></script>
         <!-- Load and execute javascript code used only in this page -->
-        
     </body>
 </html>

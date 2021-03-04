@@ -169,22 +169,6 @@ $margin=$row['margin'];
 <script>$(function(){ FormsGeneral.init(); });</script>
 <!--sweetalert-->
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-<!--activate / deactivate user with ajax-->
-<script>
-    $(document).ready(function(){
-    $("#marginupdate").click(function() {
-        $("#marginupdate").text('Please Wait...');
-        var amount = $("#amount").val();
-        $.ajax({
-            url: "ajax.php",
-            method: "POST",
-            data: {action: 'marginupdate', amount: amount},
-            success: function (data) {
-                    location.reload();
-                }
-            });
-        });
-    });
-</script>
+<script src="js/ajax_pages/margin.js"></script>
 </body>
 </html>

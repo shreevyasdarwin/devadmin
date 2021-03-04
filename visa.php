@@ -80,10 +80,6 @@ $visa = mysqli_query($con,"SELECT * FROM visa ORDER BY apply_date DESC");
                             $cnt=1;
                             while($row=mysqli_fetch_array($visa))
                             {
-                                $original_date = $row['apply_date'];
-                                $timestamp = strtotime($original_date);
-                                $new_date = date("d-m-Y", $timestamp);
-
                                 ?>
                                 <tr>
                                     <td class="text-center"><?php echo $cnt++; ?></td>
@@ -95,25 +91,15 @@ $visa = mysqli_query($con,"SELECT * FROM visa ORDER BY apply_date DESC");
                                     <td class="text-center"><img src="../visadocs/<?php echo $row['pass_front']; ?>" style="height:70px; width:70px;"></td>
                                     <td class="text-center"><img src="../visadocs/<?php echo $row['pass_back']; ?>" style="height:70px; width:70px;"></td>
                                     <td class="text-center"><img src="../visadocs/<?php echo $row['photo']; ?>" style="height:70px; width:70px;"></td>
-                                    <td class="text-center"><?php echo $new_date; ?></td>
-                                    <!--<td><a href="view_details.php?id=<?php echo $row['id']; ?>" class="btn btn-link" target="_blank">Click here to view full details</a></td>-->
+                                    <td class="text-center"><?php echo date('d-m-Y',strtotime($row['apply_date'])); ?></td>
                                     <td>
-
-                                        <div class="col-md-8">
-                                            <label class="switch switch-primary">
-                                                <?php
-                                                if($row['status']=='1') {
-                                                    echo "<input type='checkbox' id='mycheck".$row['id']."' name='user-settings-notifications' value='".$row['id']."' checked>";
-                                                    echo "<span></span>";
-                                                }
-                                                else{
-                                                    echo "<input type='checkbox' id='mycheck".$row['id']."' name='user-settings-notifications' value='".$row['id']."'>";
-                                                    echo "<span></span>";
-                                                }
-                                                ?>
-                                            </label>
-                                        </div>
-
+                                        <?php
+                                        if($row['status']=='0'){
+                                        ?>
+                                            <button class="btn btn-success" name="acceptVisa" id="acceptVisa" onclick="accpetVisa(this)" data-id="<?= $row['id'] ?>">Approve</button>
+                                        <?php }if($row['status']=='2'){ ?>
+                                            <h4 class="text-danger" disabled>Application rejected</h4>
+                                        <?php } ?>
                                     </td>
                                 </tr
                             <?php } ?>
@@ -147,40 +133,6 @@ $visa = mysqli_query($con,"SELECT * FROM visa ORDER BY apply_date DESC");
 <script>$(function(){ TablesDatatables.init(); });</script>
 <!--sweetalert2-->
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-
-<!--approve / reject visa application with ajax-->
-<script>
-    $(document).ready(function() {
-        $('input[type="checkbox"]').change(function() {
-            var id = $(this).val();
-
-            if ($(this).is(":checked")) {
-                //if checked it is activated
-                $.ajax({
-                    url: "ajax.php",
-                    method: "POST",
-                    data: {action: 'approvevisa', id: id},
-                    success: function (response) {
-                        swal("Application approved", {
-                            icon: "success",
-                        });
-                    }
-                });
-            } else {
-                $.ajax({
-                    url: "ajax.php",
-                    method: "POST",
-                    data: {action: 'rejectvisa', id: id},
-                    success: function (response) {
-                        swal("Application rejected", {
-                            icon: "error",
-                        });
-                    }
-                });
-            }
-        });
-    });
-</script>
-
+<script src="js/ajax_pages/visa.js"></script>
 </body>
 </html>

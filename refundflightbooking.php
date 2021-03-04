@@ -71,23 +71,16 @@ $book = mysqli_query($con,"SELECT CONCAT(u.fname,' ',u.lname) as fullname,p.* FR
                             $cnt = 1;
                             while($row=mysqli_fetch_array($book))
                             {
-                                $original_date = $row['created_date'];
-                                $timestamp = strtotime($original_date);
-                                $new_date = date("d-m-Y", $timestamp);
                                 ?>
                                 <tr>
                                     <td><?php echo $cnt++; ?></td>
                                     <td class="text-capitalize"><?php echo $row['fullname']; ?></td>
                                     <td>&#x20B9;<?php echo money($row['amount']); ?></td>
                                     <td><?php echo $row['transaction_id']; ?></td>
-                                    <td><?php echo $new_date; ?></td>
+                                    <td><?php echo date('d-m-Y',strtotime($row['created_date'])); ?></td>
                                     <td>
-
-                                        <?php
-                                        echo"<button class='btn btn-sm btn-primary' id='paid' name='paid' value='".$row['id']."'>Paid</button>";
-                                        echo "|";
-                                        echo"<button class='btn btn-sm btn-danger' id='reject' name='reject' value='".$row['id']."'>Reject</button>";
-                                        ?>
+                                    <button class='btn btn-sm btn-primary' onclick="paid(this)" id='paid' name='paid' data-id="<?= $row['id'] ?>">Paid</button>
+                                    <button class='btn btn-sm btn-danger' onclick="reject(this)" id='reject' name='reject'  data-id="<?= $row['id'] ?>">Reject</button>
                                     </td>
                                 </tr>
                             <?php } ?>
@@ -187,34 +180,6 @@ $book = mysqli_query($con,"SELECT CONCAT(u.fname,' ',u.lname) as fullname,p.* FR
 <script src="js/pages/tablesDatatables.js"></script>
 <script>$(function(){ TablesDatatables.init(); });</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
-<script>
-    $('#paid').click(function () {
-        var  id = $('#paid').val();
-        console.log(id);
-        $.ajax({
-            url: "ajax.php",
-            method: "POST",
-            data: {action: 'paid', id: id},
-            success: function (data) {
-                location.reload();
-            }
-        });
-    })
-</script>
-
-<script>
-    $('#reject').click(function () {
-        var  id = $('#reject').val();
-        console.log(id);
-        $.ajax({
-            url: "ajax.php",
-            method: "POST",
-            data: {action: 'reject', id: id},
-            success: function (data) {
-                location.reload();
-            }
-        });
-    })
-</script>
+<script src="js/ajax_pages/refundflightbooking.js"></script>
 </body>
 </html>
