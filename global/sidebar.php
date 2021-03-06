@@ -186,31 +186,5 @@ $activePage = basename($_SERVER['PHP_SELF'], ".php");
         </div>
     </div>
 </div>
-<script>
-    document.getElementById("changepassword").addEventListener("click", function(){
-        var npass = document.getElementById("npass").value
-        var cpass = document.getElementById("cpass").value
-        if(!npass){
-            document.getElementById("npass_err").innerHTML="<p class='text-danger'>Please fillout this field</p>"
-            return
-        } 
-        if(!cpass){
-            document.getElementById("cpass_err").innerHTML="<p class='text-danger'>Please fillout this field</p>"
-            return
-        } 
-        $.ajax({
-            url: 'ajax.php',
-            method: 'POST',
-            data: { action: 'changepassword', npass: npass, cpass: cpass },
-            success: function(response){
-                console.log(response);
-                if(response=='3'){ 
-                    document.getElementById("response").innerHTML="<div class='alert alert-success' role='alert'>Password updated successfully!</div>"
-                    setTimeout(() => {
-                        window.location.reload()
-                    }, 1000);
-                }
-            }
-        })
-    })
+<script src="js/ajax_pages/changePassword.js">
 </script>
