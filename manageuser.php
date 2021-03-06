@@ -204,19 +204,10 @@ $user = mysqli_query($con,"select u.id,u.mobile,u.email,u.created_date,u.status,
                                     <td class="text-center">
                                         <div class="col-md-8">
                                             <label class="switch switch-primary">
-                                                <?php
-                                                if($row['status']=='1') {
-                                                    echo "<input type='checkbox' id='mycheck".$row['id']."' name='user-settings-notifications' value='".$row['id']."' checked>";
-                                                    echo "<span></span>";
-                                                }
-                                                else{
-                                                    echo "<input type='checkbox' id='mycheck".$row['id']."' name='user-settings-notifications' value='".$row['id']."'>";
-                                                    echo "<span></span>";
-                                                }
-                                                ?>
+                                                <input type='checkbox' id='mycheck<?= $row['id']?>' name='user-settings-notifications'  ='<?= $row['id'] ?>' <?= $row['status']=='1' ? 'checked' : '' ?>>
+                                                <span></span>
                                             </label>
                                         </div>
-
                                     </td>
                                 </tr>
                             <?php } ?>
@@ -280,78 +271,11 @@ $user = mysqli_query($con,"select u.id,u.mobile,u.email,u.created_date,u.status,
 <script src="js/vendor/jquery.min.js"></script>
 <script src="js/vendor/bootstrap.min.js"></script>
 <script src="js/plugins.js"></script>
-<script src="js/app.js"></script>
 <!--sweetalert2-->
+<script src="js/app.js"></script>
+<script src="js/ajax_pages/manage_user.js"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
-<!--activate / deactivate user with ajax-->
-<script>
-    function showmodal(id){
-            $('#addWalletAmount').val(id);
-            $('.modal').show();   
-        }
-        //insert into wallet 
-    $('#addWalletAmount').click(()=>{
-        var amount = $('#walletAmount').val();
-        var id = $('#addWalletAmount').val();
-        console.log(amount);
-        console.log(id);
-        if(!amount){
-            $('#amt_err').text('Enter a valid amount').css('color','red');
-            $('#walletAmount').focus();
-            return false;
-        }
-        $.ajax({
-          type: 'POST',
-          url : 'ajax.php',
-          data: { action: 'addWalletAmount', id: id, amount: amount },
-          success: function(response) {
-              console.log(response);
-            //   return
-            if(response=='1'){
-                swal('success', 'Amount credited', 'success');
-                location.reload();                
-            }
-          },
-          error: function (jqXHR, exception) {
-              console.log(jqXHR);
-              console.log(exception);
-          },
-        });
-    });    
-
-    $(document).ready(function() {
-        $('input[type="checkbox"]').change(function() {
-            var id = $(this).val();
-
-            if ($(this).is(":checked")) {
-                //if checked it is activated
-                $.ajax({
-                    url: "ajax.php",
-                    method: "POST",
-                    data: {action: 'activate', id: id},
-                    success: function (result) {
-                        swal("User has been Activated", {
-                            icon: "success",
-                        });
-                    }
-                });
-            } else {
-                $.ajax({
-                    url: "ajax.php",
-                    method: "POST",
-                    data: {action: 'deactivate', id: id},
-                    success: function (data) {
-                        swal("User has been deactivated", {
-                            icon: "success",
-                        });
-                    }
-                });
-
-            }
-        });
-    });
-</script>
 <!-- Load and execute javascript code used only in this page -->
 <script src="js/pages/tablesDatatables.js"></script>
 <script>$(function(){ TablesDatatables.init(); });</script>
