@@ -1,4 +1,5 @@
 <?php
+error_reporting(0);
 session_start();
 include('global/config.php');
 if($_SESSION['admin']==""){
@@ -7,11 +8,9 @@ if($_SESSION['admin']==""){
 $visa = mysqli_query($con,"SELECT * FROM visa ORDER BY apply_date DESC");
 ?>
 <!DOCTYPE html>
-<!--[if IE 9]>         <html class="no-js lt-ie10" lang="en"> <![endif]-->
-<!--[if gt IE 9]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+<html class="no-js" lang="en"> <!--<![endif]-->
 <head>
     <?php include("global/head.php") ?>
-    <!-- Modernizr (browser feature detection library) -->
     <script src="js/vendor/modernizr.min.js"></script>
 </head>
 <body>
@@ -43,6 +42,7 @@ $visa = mysqli_query($con,"SELECT * FROM visa ORDER BY apply_date DESC");
                 <!-- Datatables Header -->
                 <div class="content-header">
                     <div class="header-section">
+                        <?= flash(); ?>
                         <h1>
                             <i class="fa fa-table"></i>View visa applications
                         </h1>
@@ -71,7 +71,7 @@ $visa = mysqli_query($con,"SELECT * FROM visa ORDER BY apply_date DESC");
                                 <th class="text-center">Passport(back)</th>
                                 <th class="text-center">Photo</th>
                                 <th class="text-center" style="width: 100px;">Applied date</th>
-                                <!--<th>View details</th>-->
+                                <th>Status</th>
                                 <th>Action</th>
                             </tr>
                             </thead>
@@ -93,13 +93,13 @@ $visa = mysqli_query($con,"SELECT * FROM visa ORDER BY apply_date DESC");
                                     <td class="text-center"><img src="../visadocs/<?php echo $row['photo']; ?>" style="height:70px; width:70px;"></td>
                                     <td class="text-center"><?php echo date('d-m-Y',strtotime($row['apply_date'])); ?></td>
                                     <td>
-                                        <?php
-                                        if($row['status']=='0'){
-                                        ?>
+                                        <?php if($row['status'] == 0){ ?>
                                             <button class="btn btn-success" name="acceptVisa" id="acceptVisa" onclick="accpetVisa(this)" data-id="<?= $row['id'] ?>">Approve</button>
-                                        <?php }if($row['status']=='2'){ ?>
-                                            <h4 class="text-danger" disabled>Application rejected</h4>
-                                        <?php } ?>
+                                            <button class="btn btn-danger" name="acceptVisa" id="rejectVisa" onclick="rejectVisa(this)" data-id="<?= $row['id'] ?>">Reject</button>
+                                        <?php }else{ echo '---'; }?>
+                                    </td>
+                                    <td>
+                                        <h4 class="text-<?= $row['status'] == 0 ? 'warning' : ($row['status'] == 1 ? 'success' : 'danger') ?>" disabled><?= $row['status'] == 0 ? 'Application Pending' : ($row['status'] == 1 ? 'Application Approved' : 'Application Rejected')  ?></h4>
                                     </td>
                                 </tr
                             <?php } ?>
