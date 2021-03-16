@@ -123,6 +123,17 @@ $activePage = basename($_SERVER['PHP_SELF'], ".php");
                 <li>
                     <a href="managecoupons.php" class="<?= ($activePage == 'managecoupons') ? 'active':''; ?>"><i class="fa fa-gift sidebar-nav-icon"></i><span class="sidebar-nav-mini-hide">Manage Coupons</span></a>
                 </li>
+
+                <li class="sidebar-header">
+                    <span class="sidebar-header-options clearfix"><a href="javascript:void(0)" data-toggle="tooltip" title="Coupons"><i class="fa fa-gift"></i></a></span>
+                    <span class="sidebar-header-title">offers</span>
+                </li>
+                <li>
+                    <a href="add_offer.php" class="<?= ($activePage == 'add_offer') ? 'active':''; ?>"><i class="fa fa-gift sidebar-nav-icon"></i><span class="sidebar-nav-mini-hide">Add Offers</span></a>
+                </li>
+                <li>
+                    <a href="manage_offer.php" class="<?= ($activePage == 'manage_offer') ? 'active':''; ?>"><i class="fa fa-gift sidebar-nav-icon"></i><span class="sidebar-nav-mini-hide">Manage Offers</span></a>
+                </li>
                 <li class="sidebar-header">
                     <span class="sidebar-header-options clearfix"><a href="javascript:void(0)" data-toggle="tooltip" title="Margin"><i class="fa fa-money"></i></a></span>
                     <span class="sidebar-header-title">Margin</span>
