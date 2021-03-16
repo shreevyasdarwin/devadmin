@@ -1,4 +1,5 @@
 <?php
+error_reporting(0);
 session_start();
 include('global/config.php');
 include('global/function.php');
@@ -273,15 +274,15 @@ $file_name = basename($url);
                                 $file_name = basename($url);
                                 ?>
                                 <tr>
-                                    <td class="text-center"><?php echo $cnt++; ?></td>
-                                    <td class="text-capitalize text-center"><?php echo $name; ?></td>
-                                    <td class="text-center text-center"><?php echo $row['appReference']; ?></td>
-                                    <td class="text-center">₹<?php echo money($row['amount']); ?></td>
-                                    <td class="text-center"><?php echo $row['airline']; ?></td>
-                                    <td class="text-center"><?php echo $row['flight_no']; ?></td>
-                                    <td class="text-center"><?php echo $row['cabinclass']; ?></td>
-                                    <td class="text-center"><a class="btn btn-link" href="admin-invoice.php?id=<?php echo $row['id'];?>" target="_blank">View invoice</a></td>
-                                    <td class="text-center"><?php echo $new_date; ?></td>
+                                    <td class="text-center"><?= $cnt++; ?></td>
+                                    <td class="text-capitalize text-center"><?= $name; ?></td>
+                                    <td class="text-center text-center"><?= $row['appReference']; ?></td>
+                                    <td class="text-center">₹<?= IND_money_format($row['amount']); ?></td>
+                                    <td class="text-center"><?= $row['airline']; ?></td>
+                                    <td class="text-center"><?= $row['flight_no']; ?></td>
+                                    <td class="text-center"><?= $row['cabinclass']; ?></td>
+                                    <td class="text-center"><a class="btn btn-link" href="admin-invoice.php?id=<?= $row['id'];?>" target="_blank">View invoice</a></td>
+                                    <td class="text-center"><?= $new_date; ?></td>
                                 </tr>
                             <?php } ?>
                             </tbody>

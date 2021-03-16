@@ -80,17 +80,15 @@ $count = mysqli_num_rows($book);
                             $cnt = 1;
                             while($row=mysqli_fetch_array($book))
                             {
-                                $original_date = $row['created_date'];
-                                $timestamp = strtotime($original_date);
-                                $new_date = date("d-m-Y", $timestamp);
-                                ?>
+                                $new_date = date("d-m-Y", strtotime($row['created_date']));
+                            ?>
                                 <tr>
-                                    <td><?php echo $cnt++; ?></td>
-                                    <td class="text-capitalize"><?php echo $row['fullname']; ?></td>
-                                    <td>&#x20B9;<?php echo money($row['amount']); ?></td>
-                                    <td><?php echo $row['appreference']; ?></td>
-                                    <td><?php echo $row['transaction_id']; ?></td>
-                                    <td><?php echo $new_date; ?></td>
+                                    <td><?= $cnt++; ?></td>
+                                    <td class="text-capitalize"><?= $row['fullname']; ?></td>
+                                    <td>&#x20B9;<?= IND_money_format($row['amount']); ?></td>
+                                    <td><?= $row['appreference']; ?></td>
+                                    <td><?= $row['transaction_id']; ?></td>
+                                    <td><?= $new_date; ?></td>
                                     <td>
 
                                         <?php

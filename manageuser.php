@@ -1,5 +1,6 @@
 <?php
 session_start();
+error_reporting(0);
 include('global/config.php');
 if($_SESSION['admin']==""){
     header('location:index.php');
@@ -15,8 +16,12 @@ $user = mysqli_query($con,"select u.id,u.mobile,u.email,u.created_date,u.status,
 
     <!-- Modernizr (browser feature detection library) -->
     <script src="js/vendor/modernizr.min.js"></script>
+    <script defer src="js/ajax_pages/manage_user.js"></script>
     <style>
         #modal-user-settings{height:0px !important;}
+        .modal-open .modal {
+            height: 500px !important;
+        }
     </style>
 </head>
 <body>
@@ -51,7 +56,7 @@ $user = mysqli_query($con,"select u.id,u.mobile,u.email,u.created_date,u.status,
                     <div class="chat-talk display-none">
                         <!-- Chat Info -->
                         <div class="chat-talk-info sidebar-section">
-                            <button id="chat-talk-close-btn" class="btn btn-xs btn-default pull-right">
+                            <button id="chat-talk-close-btn" class="modal btn-xs btn-default pull-right">
                                 <i class="fa fa-times"></i>
                             </button>
                             <img src="img/placeholders/avatars/avatar5.jpg" alt="avatar" class="img-circle pull-left">
@@ -166,7 +171,7 @@ $user = mysqli_query($con,"select u.id,u.mobile,u.email,u.created_date,u.status,
 
                 <!-- Datatables Content -->
                 <div class="block full">
-
+                <?= flash() ?>
                     <div class="table-responsive">
                         <table id="example-datatable" class="table table-vcenter table-condensed table-bordered">
                             <thead>
@@ -177,7 +182,8 @@ $user = mysqli_query($con,"select u.id,u.mobile,u.email,u.created_date,u.status,
                                 <th class="text-center">Email</th>
                                 <th class="text-center">Registered Date</th>
                                 <th class="text-center">Wallet amount</th>
-                                <th class="text-center">Modal</th>
+                                <th class="text-center">Add in Wallet</th>
+                                <th class="text-center">Minus from Wallet</th>
                                 <th class="text-center">Transaction history</th>
                                 <th class="text-center">Actions</th>
                             </tr>
@@ -190,33 +196,28 @@ $user = mysqli_query($con,"select u.id,u.mobile,u.email,u.created_date,u.status,
                                 $new_date = date("d-m-Y", strtotime($row['created_date']));
                                 ?>
                                 <tr>
-                                    <td class="text-center"><?php echo $cnt++; ?></td>
-                                    <td class="text-center"><?php echo $row['fullname']; ?></td>
-                                    <td class="text-center"><?php echo $row['mobile']; ?></td>
-                                    <td class="text-center"><?php echo $row['email']; ?></td>
-                                    <td class="text-center"><?php echo $new_date; ?></td>
-                                    <td class="text-center">&#8377;<?php echo $row['wallet']; ?></td>
+                                    <td class="text-center"><?= $cnt++; ?></td>
+                                    <td class="text-center"><?= $row['fullname']; ?></td>
+                                    <td class="text-center"><?= $row['mobile']; ?></td>
+                                    <td class="text-center"><?= $row['email']; ?></td>
+                                    <td class="text-center"><?= $new_date; ?></td>
+                                    <td class="text-center">&#8377;<?= $row['wallet']; ?></td>
                                     <td class="text-center" style="width: 10%">
                                         <button type="button" class="btn btn-default" data-toggle="modal" onclick="showmodal('<?= $row['id']?>');" data-target="#modal-default">
+                                        <i class="fa fa-edit"></i>
+                                    </td>
+                                    <td class="text-center" style="width: 10%">
+                                        <button type="button" class="btn btn-default" data-toggle="modal" onclick="showmodal1('<?= $row['id']?>','<?= $row['wallet'] ?>');" data-target="#modal-default">
                                         <i class="fa fa-edit"></i>
                                     </td>
                                     <td class="text-center"><a class="btn btn-link" href="view_transaction_history.php?id=<?php echo $row['id']; ?>" target="_blank">View details</a></td>
                                     <td class="text-center">
                                         <div class="col-md-8">
                                             <label class="switch switch-primary">
-                                                <?php
-                                                if($row['status']=='1') {
-                                                    echo "<input type='checkbox' id='mycheck".$row['id']."' name='user-settings-notifications' value='".$row['id']."' checked>";
-                                                    echo "<span></span>";
-                                                }
-                                                else{
-                                                    echo "<input type='checkbox' id='mycheck".$row['id']."' name='user-settings-notifications' value='".$row['id']."'>";
-                                                    echo "<span></span>";
-                                                }
-                                                ?>
+                                                <input type='checkbox' onclick="changeStatus('<?= $row['id'] ?>',this.value)" id="checkbox<?= $row['id'] ?>" name='user-settings-notifications'  value='<?= $row['status']=='1' ? '0' : '1' ?>' <?= $row['status']=='1' ? 'checked' : '' ?>>
+                                                <span></span>
                                             </label>
                                         </div>
-
                                     </td>
                                 </tr>
                             <?php } ?>
@@ -243,7 +244,7 @@ $user = mysqli_query($con,"select u.id,u.mobile,u.email,u.created_date,u.status,
     <form>
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title">Add wallet amount</h4>
+        <h4 class="modal-title" id="modeltitle"></h4>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -253,14 +254,19 @@ $user = mysqli_query($con,"select u.id,u.mobile,u.email,u.created_date,u.status,
             <div class="col-md-12">
                 <div class="form-group">
                 <label>Enter amount <span id="amt_err"></span></label>
-                <input type="text" class="form-control" name="walletAmount" id="walletAmount" placeholder="Enter amount">
+                <input type="text" class="form-control" name="walletAmount" id="walletAmount" oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/(\.*)/g, '');" placeholder="Enter amount">
+                <input type="hidden" class="form-control" name="actualwalletAmount" id="actualwalletAmount">
                 </div>
             </div>
         </div>
       </div>
+      <div class="text-center">
+        <span id="errmsg"></span>
+      </div>
       <div class="modal-footer justify-content-between">
         <button type="button" class="btn btn-default float-right" data-dismiss="modal">Close</button>
         <button type="button" class="btn btn-primary" name="addWalletAmount" id="addWalletAmount">Update</button>
+        <button type="button" class="btn btn-primary" name="minusWalletAmount" id="minusWalletAmount">Update</button>
       </div>
     </div>
   </form>
@@ -280,78 +286,10 @@ $user = mysqli_query($con,"select u.id,u.mobile,u.email,u.created_date,u.status,
 <script src="js/vendor/jquery.min.js"></script>
 <script src="js/vendor/bootstrap.min.js"></script>
 <script src="js/plugins.js"></script>
-<script src="js/app.js"></script>
 <!--sweetalert2-->
+<script src="js/app.js"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
-<!--activate / deactivate user with ajax-->
-<script>
-    function showmodal(id){
-            $('#addWalletAmount').val(id);
-            $('.modal').show();   
-        }
-        //insert into wallet 
-    $('#addWalletAmount').click(()=>{
-        var amount = $('#walletAmount').val();
-        var id = $('#addWalletAmount').val();
-        console.log(amount);
-        console.log(id);
-        if(!amount){
-            $('#amt_err').text('Enter a valid amount').css('color','red');
-            $('#walletAmount').focus();
-            return false;
-        }
-        $.ajax({
-          type: 'POST',
-          url : 'ajax.php',
-          data: { action: 'addWalletAmount', id: id, amount: amount },
-          success: function(response) {
-              console.log(response);
-            //   return
-            if(response=='1'){
-                swal('success', 'Amount credited', 'success');
-                location.reload();                
-            }
-          },
-          error: function (jqXHR, exception) {
-              console.log(jqXHR);
-              console.log(exception);
-          },
-        });
-    });    
-
-    $(document).ready(function() {
-        $('input[type="checkbox"]').change(function() {
-            var id = $(this).val();
-
-            if ($(this).is(":checked")) {
-                //if checked it is activated
-                $.ajax({
-                    url: "ajax.php",
-                    method: "POST",
-                    data: {action: 'activate', id: id},
-                    success: function (result) {
-                        swal("User has been Activated", {
-                            icon: "success",
-                        });
-                    }
-                });
-            } else {
-                $.ajax({
-                    url: "ajax.php",
-                    method: "POST",
-                    data: {action: 'deactivate', id: id},
-                    success: function (data) {
-                        swal("User has been deactivated", {
-                            icon: "success",
-                        });
-                    }
-                });
-
-            }
-        });
-    });
-</script>
 <!-- Load and execute javascript code used only in this page -->
 <script src="js/pages/tablesDatatables.js"></script>
 <script>$(function(){ TablesDatatables.init(); });</script>

@@ -21,28 +21,8 @@ if(isset($_POST['action']) && $_POST['action'] == 'changepassword'){
         var_dump($pdo->errorInfo());
     }
 }
-//to deactivate user
-if (isset($_POST['deactivate'])){
-    $id=$_POST['id'];
-    $deactivate = mysqli_query($con,"UPDATE user_register SET status='0' WHERE id=$id");
-    if ($deactivate) {
-        echo"success";
-    }
-    else{
-        echo"error";
-    }
-}
-//to activate user
-if (isset($_POST['action']) && $_POST['action'] == 'activate') {
-    $id=$_POST['id'];
-    $activate = mysqli_query($con,"UPDATE user_register SET status='1' WHERE id=$id");
-    if ($activate) {
-        echo"success";
-    }
-    else{
-        echo"error";
-    }
-}
+
+
 //update margin
 if(isset($_POST['action']) && $_POST['action'] == 'marginupdate')
 {

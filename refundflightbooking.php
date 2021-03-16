@@ -73,11 +73,11 @@ $book = mysqli_query($con,"SELECT CONCAT(u.fname,' ',u.lname) as fullname,p.* FR
                             {
                                 ?>
                                 <tr>
-                                    <td><?php echo $cnt++; ?></td>
-                                    <td class="text-capitalize"><?php echo $row['fullname']; ?></td>
-                                    <td>&#x20B9;<?php echo money($row['amount']); ?></td>
-                                    <td><?php echo $row['transaction_id']; ?></td>
-                                    <td><?php echo date('d-m-Y',strtotime($row['created_date'])); ?></td>
+                                    <td><?= $cnt++; ?></td>
+                                    <td class="text-capitalize"><?= $row['fullname']; ?></td>
+                                    <td>&#x20B9;<?= IND_money_format($row['amount']); ?></td>
+                                    <td><?= $row['transaction_id']; ?></td>
+                                    <td><?= date('d-m-Y',strtotime($row['created_date'])); ?></td>
                                     <td>
                                     <button class='btn btn-sm btn-primary' onclick="paid(this)" id='paid' name='paid' data-id="<?= $row['id'] ?>">Paid</button>
                                     <button class='btn btn-sm btn-danger' onclick="reject(this)" id='reject' name='reject'  data-id="<?= $row['id'] ?>">Reject</button>

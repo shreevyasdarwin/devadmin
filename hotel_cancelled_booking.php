@@ -265,13 +265,13 @@ $count = mysqli_num_rows($book);
                                 $new_date = date("d-m-Y", $timestamp);
                                 ?>
                                 <tr class="text-center">
-                                    <td><?php echo $cnt++; ?></td>
-                                    <td class="text-capitalize"><?php echo $row['fullname']; ?></td>
-                                    <td><?php echo $row['appReference']; ?></td>
-                                    <td><?php echo $row['cancel_charges'];?></td>
-                                    <td><?php echo $row['refund_amt'];?></td>
-                                    <td><?php echo $row['changereq_id'];?></td>
-                                    <td><?php echo $new_date; ?></td>
+                                    <td><?= $cnt++; ?></td>
+                                    <td class="text-capitalize"><?= $row['fullname']; ?></td>
+                                    <td><?= $row['appReference']; ?></td>
+                                    <td><?= IND_money_format($row['cancel_charges']);?></td>
+                                    <td><?= IND_money_format($row['refund_amt']);?></td>
+                                    <td><?= $row['changereq_id'];?></td>
+                                    <td><?= $new_date; ?></td>
                                     <td class="text-center">
                                         <?php if($row['refund_amt'] != 0){
                                             echo "<button type='submit' id='cancelpaid$cnt' class='btn btn-sm btn-success' value='".$row['id']."'name='cancelpaid'>Paid</button>";
@@ -386,9 +386,9 @@ for($i=1;$i<=$count;$i++)
 {
     ?>
     <script>
-        $('#cancelpaid<?php echo $cnt; ?>').click(function () {
+        $('#cancelpaid<?= $cnt; ?>').click(function () {
 
-            var  id = $('#cancelpaid<?php echo $cnt; ?>').val();
+            var  id = $('#cancelpaid<?= $cnt; ?>').val();
             console.log(id);
             $.ajax({
                 url: "ajax.php",
@@ -404,9 +404,9 @@ for($i=1;$i<=$count;$i++)
             });
         });
 
-        $('#cancelreject<?php echo $cnt; ?>').click(function () {
+        $('#cancelreject<?= $cnt; ?>').click(function () {
 
-            var  id = $('#cancelreject<?php echo $cnt; ?>').val();
+            var  id = $('#cancelreject<?= $cnt; ?>').val();
             console.log(id);
             $.ajax({
                 url: "ajax.php",

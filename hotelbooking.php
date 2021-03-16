@@ -97,7 +97,7 @@ $book = mysqli_query($con,'SELECT u.user_id,CONCAT(u.fname," ", u.lname) as full
                                     else{
                                         echo "<span class='label label-warning text-uppercase'>on hold</span>";
                                     }?></td>
-                                <td class="text-center">&#x20B9;<?php echo money($row['booking_amt']); ?></td>
+                                <td class="text-center">&#x20B9;<?php echo IND_money_format($row['booking_amt']); ?></td>
                                 <td class="text-center"><?php echo $row['created_date']; ?></td>
                                 <td class="text-center"><a href="view_hotel_booking_details.php?id=<?php echo $row['id'] ?>" class="btn btn-link" target="_blank">View details</a></td>
                                 <td class="text-center"><a href="hotelinvoice.php?id=<?php echo $row['id'] ?>" class="btn btn-link" target="_blank">View Invoice</a></td>
